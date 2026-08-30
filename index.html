@@ -209,15 +209,6 @@ button {
     color: #ff8178;
 }
 
-.score {
-    text-align: center;
-}
-
-.scoreNumber {
-    font-size: 65px;
-    font-weight: bold;
-    color: #5ed39a;
-}
 
 .emergencyHeader {
     background: #472827;
@@ -654,28 +645,2112 @@ footer {
         </div>
 
     </div>
+</div>
 
 
-    <!-- RESILIENCE -->
+<footer>
+    🌱 Eco Island — Building smarter,
+    safer island communities.
+</footer>
+
+
+<script>
+
+
+/* =========================================================
+   ISLAND DATABASE
+========================================================= */
+
+const islands = {
+
+    bali: {
+        name: "🇮🇩 Bali",
+        description: "A tropical Indonesian island known for tourism, agriculture, forests and volcanic landscapes.",
+        climate: "Tropical",
+        resource: "Agriculture + Tourism",
+        risk: "🌋 Volcano Eruption",
+        renewable: "☀️ Solar",
+        priority: "🏥 Emergency services",
+        location: "Bali, Indonesia",
+        lat: -8.4095,
+        lon: 115.1889,
+        hazard: "volcano"
+    },
+
+    maldives: {
+        name: "🇲🇻 Maldives",
+        description: "A low-lying island nation highly exposed to coastal flooding, storms and sea-level hazards.",
+        climate: "Tropical",
+        resource: "Tourism + Marine life",
+        risk: "🌊 Coastal Flooding",
+        renewable: "☀️ Solar",
+        priority: "💧 Fresh water",
+        location: "Maldives",
+        lat: 3.2028,
+        lon: 73.2207,
+        hazard: "flood"
+    },
+
+    hawaii: {
+        name: "🇺🇸 Hawaii",
+        description: "A volcanic island chain with tropical ecosystems, tourism and renewable-energy potential.",
+        climate: "Tropical",
+        resource: "Tourism + Agriculture",
+        risk: "🌋 Volcano Eruption",
+        renewable: "☀️ Solar + Wind",
+        priority: "🏥 Emergency services",
+        location: "Hawaii, USA",
+        lat: 19.8968,
+        lon: -155.5828,
+        hazard: "volcano"
+    },
+
+    iceland: {
+        name: "🇮🇸 Iceland",
+        description: "A volcanic island with abundant geothermal energy and hydropower resources.",
+        climate: "Cold",
+        resource: "Geothermal Energy",
+        risk: "🌋 Volcanic Activity",
+        renewable: "♨️ Geothermal",
+        priority: "⚡ Energy",
+        location: "Iceland",
+        lat: 64.9631,
+        lon: -19.0208,
+        hazard: "volcano"
+    },
+
+    greenland: {
+        name: "🇬🇱 Greenland",
+        description: "An Arctic island exposed to extreme cold, snow and changing ice conditions.",
+        climate: "Arctic",
+        resource: "Fresh Water",
+        risk: "❄️ Extreme Cold",
+        renewable: "🌬️ Wind",
+        priority: "🔥 Heating",
+        location: "Greenland",
+        lat: 64.1814,
+        lon: -51.6941,
+        hazard: "cold"
+    },
+
+    madagascar: {
+        name: "🇲🇬 Madagascar",
+        description: "A biodiversity hotspot with forests, farms and large coastal communities.",
+        climate: "Tropical",
+        resource: "Agriculture",
+        risk: "🌀 Cyclone",
+        renewable: "☀️ Solar",
+        priority: "🌾 Food",
+        location: "Madagascar",
+        lat: -18.7669,
+        lon: 46.8691,
+        hazard: "cyclone"
+    },
+
+    srilanka: {
+        name: "🇱🇰 Sri Lanka",
+        description: "A tropical island with agriculture, forests and major coastal communities.",
+        climate: "Tropical",
+        resource: "Agriculture",
+        risk: "🌧️ Flooding",
+        renewable: "☀️ Solar",
+        priority: "💧 Water",
+        location: "Sri Lanka",
+        lat: 7.8731,
+        lon: 80.7718,
+        hazard: "flood"
+    },
+
+    jamaica: {
+        name: "🇯🇲 Jamaica",
+        description: "A Caribbean island with tropical forests, agriculture and coastal communities.",
+        climate: "Tropical",
+        resource: "Agriculture + Tourism",
+        risk: "🌀 Hurricane",
+        renewable: "☀️ Solar",
+        priority: "🏠 Shelters",
+        location: "Jamaica",
+        lat: 18.1096,
+        lon: -77.2975,
+        hazard: "hurricane"
+    },
+
+    cuba: {
+        name: "🇨🇺 Cuba",
+        description: "A large Caribbean island with agricultural regions and extensive coastlines.",
+        climate: "Tropical",
+        resource: "Agriculture",
+        risk: "🌀 Hurricane",
+        renewable: "☀️ Solar",
+        priority: "💧 Water",
+        location: "Cuba",
+        lat: 21.5218,
+        lon: -77.7812,
+        hazard: "hurricane"
+    },
+
+    cyprus: {
+        name: "🇨🇾 Cyprus",
+        description: "A Mediterranean island facing heat, drought and wildfire conditions.",
+        climate: "Mediterranean",
+        resource: "Agriculture",
+        risk: "🔥 Wildfire",
+        renewable: "☀️ Solar",
+        priority: "💧 Water",
+        location: "Cyprus",
+        lat: 35.1264,
+        lon: 33.4299,
+        hazard: "wildfire"
+    },
+
+    crete: {
+        name: "🇬🇷 Crete",
+        description: "A Mediterranean island with agriculture, tourism and strong solar potential.",
+        climate: "Mediterranean",
+        resource: "Agriculture + Tourism",
+        risk: "🔥 Wildfire",
+        renewable: "☀️ Solar",
+        priority: "💧 Water",
+        location: "Crete, Greece",
+        lat: 35.2401,
+        lon: 24.8093,
+        hazard: "wildfire"
+    },
+
+    sardinia: {
+        name: "🇮🇹 Sardinia",
+        description: "A Mediterranean island with agriculture, tourism and renewable-energy potential.",
+        climate: "Mediterranean",
+        resource: "Agriculture",
+        risk: "🔥 Wildfire",
+        renewable: "☀️ Solar + Wind",
+        priority: "💧 Water",
+        location: "Sardinia, Italy",
+        lat: 40.1209,
+        lon: 9.0129,
+        hazard: "wildfire"
+    },
+
+    sicily: {
+        name: "🇮🇹 Sicily",
+        description: "A large Mediterranean island with cities, farms and volcanic areas.",
+        climate: "Mediterranean",
+        resource: "Agriculture",
+        risk: "🌋 Volcano Eruption",
+        renewable: "☀️ Solar",
+        priority: "🏥 Emergency services",
+        location: "Sicily, Italy",
+        lat: 37.5999,
+        lon: 14.0154,
+        hazard: "volcano"
+    },
+
+    corsica: {
+        name: "🇫🇷 Corsica",
+        description: "A mountainous Mediterranean island with forests and coastal communities.",
+        climate: "Mediterranean",
+        resource: "Forests",
+        risk: "🔥 Wildfire",
+        renewable: "☀️ Solar",
+        priority: "🌲 Forest protection",
+        location: "Corsica, France",
+        lat: 42.0396,
+        lon: 9.0129,
+        hazard: "wildfire"
+    },
+
+    tasmania: {
+        name: "🇦🇺 Tasmania",
+        description: "A cool island with forests, farms, mountains and hydropower.",
+        climate: "Temperate",
+        resource: "Hydropower",
+        risk: "🔥 Bushfire",
+        renewable: "💧 Hydropower",
+        priority: "🌲 Forest protection",
+        location: "Tasmania, Australia",
+        lat: -41.4545,
+        lon: 145.9707,
+        hazard: "wildfire"
+    },
+
+    northisland: {
+        name: "🇳🇿 North Island",
+        description: "New Zealand's most populated island with volcanoes, farms and cities.",
+        climate: "Temperate",
+        resource: "Agriculture",
+        risk: "🌎 Earthquake",
+        renewable: "💧 Hydropower",
+        priority: "🏥 Hospitals",
+        location: "North Island, New Zealand",
+        lat: -38.5,
+        lon: 175.5,
+        hazard: "earthquake"
+    },
+
+    southisland: {
+        name: "🇳🇿 South Island",
+        description: "A mountainous island with glaciers, farms, forests and hydropower.",
+        climate: "Temperate",
+        resource: "Hydropower",
+        risk: "🌎 Earthquake",
+        renewable: "💧 Hydropower",
+        priority: "⚡ Energy",
+        location: "South Island, New Zealand",
+        lat: -43.5,
+        lon: 171.5,
+        hazard: "earthquake"
+    },
+
+    borneo: {
+        name: "🌏 Borneo",
+        description: "A massive tropical island containing rainforests, rivers and diverse wildlife.",
+        climate: "Tropical",
+        resource: "Rainforest + Water",
+        risk: "🌧️ Flooding",
+        renewable: "💧 Hydropower",
+        priority: "💧 Water",
+        location: "Borneo",
+        lat: 0.9619,
+        lon: 114.5548,
+        hazard: "flood"
+    },
+
+    java: {
+        name: "🇮🇩 Java",
+        description: "A densely populated island with cities, farms and volcanoes.",
+        climate: "Tropical",
+        resource: "Agriculture",
+        risk: "🌋 Volcano Eruption",
+        renewable: "☀️ Solar",
+        priority: "🏥 Hospitals",
+        location: "Java, Indonesia",
+        lat: -7.6145,
+        lon: 110.7122,
+        hazard: "volcano"
+    },
+
+    sumatra: {
+        name: "🇮🇩 Sumatra",
+        description: "A large tropical island with rainforests, farms and mountains.",
+        climate: "Tropical",
+        resource: "Agriculture + Forests",
+        risk: "🌎 Earthquake",
+        renewable: "💧 Hydropower",
+        priority: "🏠 Communities",
+        location: "Sumatra, Indonesia",
+        lat: -0.5897,
+        lon: 101.3431,
+        hazard: "earthquake"
+    },
+
+    luzon: {
+        name: "🇵🇭 Luzon",
+        description: "The Philippines' largest island with major cities, farms and volcanic zones.",
+        climate: "Tropical",
+        resource: "Agriculture",
+        risk: "🌀 Typhoon",
+        renewable: "☀️ Solar + Wind",
+        priority: "🏥 Hospitals",
+        location: "Luzon, Philippines",
+        lat: 16.5662,
+        lon: 121.2626,
+        hazard: "typhoon"
+    },
+
+    mindanao: {
+        name: "🇵🇭 Mindanao",
+        description: "A tropical island with agricultural regions, forests and coastal communities.",
+        climate: "Tropical",
+        resource: "Agriculture",
+        risk: "🌀 Tropical Storm",
+        renewable: "☀️ Solar",
+        priority: "🌾 Food",
+        location: "Mindanao, Philippines",
+        lat: 7.1907,
+        lon: 125.4553,
+        hazard: "typhoon"
+    },
+
+    okinawa: {
+        name: "🇯🇵 Okinawa",
+        description: "A subtropical Japanese island chain exposed to typhoons and coastal hazards.",
+        climate: "Subtropical",
+        resource: "Marine Ecosystems",
+        risk: "🌀 Typhoon",
+        renewable: "☀️ Solar",
+        priority: "🏥 Hospitals",
+        location: "Okinawa, Japan",
+        lat: 26.2124,
+        lon: 127.6809,
+        hazard: "typhoon"
+    },
+
+    honshu: {
+        name: "🇯🇵 Honshu",
+        description: "Japan's largest island containing major cities and mountains.",
+        climate: "Temperate",
+        resource: "Technology + Industry",
+        risk: "🌎 Earthquake",
+        renewable: "☀️ Solar + Hydropower",
+        priority: "🏥 Hospitals",
+        location: "Honshu, Japan",
+        lat: 36.2048,
+        lon: 138.2529,
+        hazard: "earthquake"
+    },
+
+    taiwan: {
+        name: "🇹🇼 Taiwan",
+        description: "A mountainous island with dense cities, technology and farms.",
+        climate: "Subtropical",
+        resource: "Technology",
+        risk: "🌎 Earthquake",
+        renewable: "☀️ Solar + Wind",
+        priority: "⚡ Power",
+        location: "Taiwan",
+        lat: 23.6978,
+        lon: 120.9605,
+        hazard: "earthquake"
+    },
+
+    puertorico: {
+        name: "🇵🇷 Puerto Rico",
+        description: "A Caribbean island with tropical forests, mountains and coastal communities.",
+        climate: "Tropical",
+        resource: "Tourism + Agriculture",
+        risk: "🌀 Hurricane",
+        renewable: "☀️ Solar",
+        priority: "⚡ Power",
+        location: "Puerto Rico",
+        lat: 18.2208,
+        lon: -66.5901,
+        hazard: "hurricane"
+    },
+
+    bahamas: {
+        name: "🇧🇸 Bahamas",
+        description: "A low-lying Caribbean island nation with extensive coastlines.",
+        climate: "Tropical",
+        resource: "Tourism + Marine Life",
+        risk: "🌀 Hurricane",
+        renewable: "☀️ Solar",
+        priority: "🌊 Coastal protection",
+        location: "Bahamas",
+        lat: 25.0343,
+        lon: -77.3963,
+        hazard: "hurricane"
+    },
+
+    barbados: {
+        name: "🇧🇧 Barbados",
+        description: "A Caribbean island with tourism, agriculture and coastal communities.",
+        climate: "Tropical",
+        resource: "Tourism",
+        risk: "🌀 Hurricane",
+        renewable: "☀️ Solar",
+        priority: "💧 Water",
+        location: "Barbados",
+        lat: 13.1939,
+        lon: -59.5432,
+        hazard: "hurricane"
+    },
+
+    fiji: {
+        name: "🇫🇯 Fiji",
+        description: "A Pacific island nation with forests, reefs, farms and coastal communities.",
+        climate: "Tropical",
+        resource: "Marine Ecosystems",
+        risk: "🌀 Cyclone",
+        renewable: "💧 Hydropower",
+        priority: "🌊 Coastal protection",
+        location: "Fiji",
+        lat: -17.7134,
+        lon: 178.0650,
+        hazard: "cyclone"
+    },
+
+    samoa: {
+        name: "🇼🇸 Samoa",
+        description: "A Pacific island nation with volcanic landscapes, forests and reefs.",
+        climate: "Tropical",
+        resource: "Agriculture",
+        risk: "🌊 Coastal Flooding",
+        renewable: "☀️ Solar",
+        priority: "💧 Water",
+        location: "Samoa",
+        lat: -13.7590,
+        lon: -172.1046,
+        hazard: "flood"
+    },
+
+    tonga: {
+        name: "🇹🇴 Tonga",
+        description: "A Pacific island kingdom made up of many low-lying islands.",
+        climate: "Tropical",
+        resource: "Marine Ecosystems",
+        risk: "🌊 Tsunami",
+        renewable: "☀️ Solar",
+        priority: "🏠 Evacuation",
+        location: "Tonga",
+        lat: -21.1789,
+        lon: -175.1982,
+        hazard: "tsunami"
+    },
+
+    tahiti: {
+        name: "🇵🇫 Tahiti",
+        description: "A volcanic Polynesian island with mountains, reefs and tourism.",
+        climate: "Tropical",
+        resource: "Tourism + Marine Life",
+        risk: "🌊 Coastal Flooding",
+        renewable: "☀️ Solar",
+        priority: "🌊 Coastal protection",
+        location: "Tahiti",
+        lat: -17.6509,
+        lon: -149.4260,
+        hazard: "flood"
+    },
+
+    guam: {
+        name: "🇬🇺 Guam",
+        description: "A tropical Pacific island exposed to typhoons and coastal hazards.",
+        climate: "Tropical",
+        resource: "Tourism",
+        risk: "🌀 Typhoon",
+        renewable: "☀️ Solar",
+        priority: "🏥 Emergency services",
+        location: "Guam",
+        lat: 13.4443,
+        lon: 144.7937,
+        hazard: "typhoon"
+    },
+
+    seychelles: {
+        name: "🇸🇨 Seychelles",
+        description: "An Indian Ocean island nation known for forests, reefs and biodiversity.",
+        climate: "Tropical",
+        resource: "Marine Ecosystems",
+        risk: "🌊 Coastal Flooding",
+        renewable: "☀️ Solar",
+        priority: "🌊 Coastlines",
+        location: "Seychelles",
+        lat: -4.6796,
+        lon: 55.4920,
+        hazard: "flood"
+    },
+
+    mauritius: {
+        name: "🇲🇺 Mauritius",
+        description: "A volcanic Indian Ocean island with tourism, agriculture and reefs.",
+        climate: "Tropical",
+        resource: "Tourism + Agriculture",
+        risk: "🌀 Cyclone",
+        renewable: "☀️ Solar",
+        priority: "💧 Water",
+        location: "Mauritius",
+        lat: -20.3484,
+        lon: 57.5522,
+        hazard: "cyclone"
+    },
+
+    zanzibar: {
+        name: "🇹🇿 Zanzibar",
+        description: "A tropical East African island with agriculture, fishing and tourism.",
+        climate: "Tropical",
+        resource: "Agriculture + Fisheries",
+        risk: "🌊 Coastal Flooding",
+        renewable: "☀️ Solar",
+        priority: "💧 Water",
+        location: "Zanzibar, Tanzania",
+        lat: -6.1659,
+        lon: 39.2026,
+        hazard: "flood"
+    },
+
+    mallorca: {
+        name: "🇪🇸 Mallorca",
+        description: "A Mediterranean island with tourism, agriculture and coastal cities.",
+        climate: "Mediterranean",
+        resource: "Tourism",
+        risk: "🔥 Wildfire",
+        renewable: "☀️ Solar",
+        priority: "💧 Water",
+        location: "Mallorca, Spain",
+        lat: 39.6953,
+        lon: 3.0176,
+        hazard: "wildfire"
+    },
+
+    ibiza: {
+        name: "🇪🇸 Ibiza",
+        description: "A Mediterranean island with tourism, forests and limited freshwater.",
+        climate: "Mediterranean",
+        resource: "Tourism",
+        risk: "🔥 Wildfire",
+        renewable: "☀️ Solar",
+        priority: "💧 Water",
+        location: "Ibiza, Spain",
+        lat: 39.0200,
+        lon: 1.4821,
+        hazard: "wildfire"
+    },
+
+    canary: {
+        name: "🇪🇸 Canary Islands",
+        description: "A volcanic Atlantic island group with strong solar and wind potential.",
+        climate: "Subtropical",
+        resource: "Tourism + Agriculture",
+        risk: "🌋 Volcano Eruption",
+        renewable: "☀️ Solar + Wind",
+        priority: "💧 Water",
+        location: "Canary Islands, Spain",
+        lat: 28.2916,
+        lon: -16.6291,
+        hazard: "volcano"
+    },
+
+    azores: {
+        name: "🇵🇹 Azores",
+        description: "A volcanic Atlantic island group with farms and geothermal potential.",
+        climate: "Oceanic",
+        resource: "Geothermal Energy",
+        risk: "🌋 Volcanic Activity",
+        renewable: "♨️ Geothermal",
+        priority: "⚡ Energy",
+        location: "Azores, Portugal",
+        lat: 37.7412,
+        lon: -25.6756,
+        hazard: "volcano"
+    },
+
+    madeira: {
+        name: "🇵🇹 Madeira",
+        description: "A mountainous Atlantic island with forests, agriculture and tourism.",
+        climate: "Subtropical",
+        resource: "Hydropower",
+        risk: "🌧️ Landslide",
+        renewable: "💧 Hydropower",
+        priority: "🛣️ Roads",
+        location: "Madeira, Portugal",
+        lat: 32.7607,
+        lon: -16.9595,
+        hazard: "landslide"
+    },
+
+    vancouver: {
+        name: "🇨🇦 Vancouver Island",
+        description: "A large Pacific island with forests, mountains and coastal communities.",
+        climate: "Temperate",
+        resource: "Forests",
+        risk: "🔥 Wildfire",
+        renewable: "💧 Hydropower",
+        priority: "🌲 Forests",
+        location: "Vancouver Island, Canada",
+        lat: 49.6500,
+        lon: -125.4490,
+        hazard: "wildfire"
+    },
+
+    newfoundland: {
+        name: "🇨🇦 Newfoundland",
+        description: "A North Atlantic island with fishing communities, forests and rugged coastlines.",
+        climate: "Cold",
+        resource: "Fisheries",
+        risk: "🌨️ Severe Storm",
+        renewable: "🌬️ Wind",
+        priority: "🔥 Heating",
+        location: "Newfoundland, Canada",
+        lat: 48.1667,
+        lon: -55.5000,
+        hazard: "storm"
+    },
+
+    longisland: {
+        name: "🇺🇸 Long Island",
+        description: "A densely populated Atlantic island with major coastal communities.",
+        climate: "Temperate",
+        resource: "Technology + Services",
+        risk: "🌀 Hurricane",
+        renewable: "☀️ Solar + Wind",
+        priority: "🏥 Hospitals",
+        location: "Long Island, USA",
+        lat: 40.7891,
+        lon: -73.1350,
+        hazard: "hurricane"
+    }
+};
+
+
+/* =========================================================
+   EMERGENCY DATABASE
+========================================================= */
+
+const emergencies = {
+
+    volcano: {
+        title: "🌋 VOLCANO ERUPTION SIMULATION",
+        description:
+            "The island is practicing its response to a simulated volcanic eruption. Follow official emergency instructions in a real event.",
+        precautions: [
+
+            ["🚨 Follow evacuation orders",
+             "Leave areas when officials order an evacuation because hazard zones can become dangerous quickly."],
+
+            ["🗺️ Know evacuation routes",
+             "Knowing the route ahead of time reduces confusion and delays during an emergency."],
+
+            ["🏔️ Stay away from valleys and low areas",
+             "Lahars can move through valleys, so low-lying areas can become dangerous."],
+
+            ["📻 Monitor official alerts",
+             "Officials can update hazard zones and instructions as conditions change."],
+
+            ["🏠 Shelter from ash when instructed",
+             "Staying indoors reduces exposure to airborne volcanic ash."],
+
+            ["🚗 Avoid unnecessary driving in heavy ash",
+             "Ash can reduce visibility and interfere with vehicles and roads."],
+
+            ["🐕 Bring pets indoors when possible",
+             "This reduces their exposure to ash and other volcanic hazards."],
+
+            ["🎒 Keep an emergency kit ready",
+             "Supplies help people manage if evacuation or sheltering lasts longer than expected."]
+        ]
+    },
+
+
+    hurricane: {
+        title: "🌀 HURRICANE SIMULATION",
+        description:
+            "The island is practicing its response to a simulated hurricane approaching the community.",
+        precautions: [
+
+            ["🚨 Follow evacuation orders",
+             "Leaving when officials instruct you to helps keep people away from dangerous flooding and winds."],
+
+            ["🏠 Move to a safe shelter",
+             "Strong winds and flying debris can damage buildings and make exposed areas unsafe."],
+
+            ["🌊 Stay away from flooded areas",
+             "Floodwater can hide dangerous conditions and may move vehicles or debris."],
+
+            ["📻 Monitor official alerts",
+             "Storm tracks and evacuation instructions can change as the storm develops."],
+
+            ["🔋 Protect backup power",
+             "Keeping backup power available helps emergency communication and essential services."],
+
+            ["💧 Store safe drinking water",
+             "Water systems can be disrupted or contaminated during severe storms."],
+
+            ["📱 Keep communication devices charged",
+             "A charged phone can help people receive emergency updates and contact responders."]
+        ]
+    },
+
+
+    cyclone: {
+        title: "🌀 CYCLONE SIMULATION",
+        description:
+            "The island is practicing its response to a simulated tropical cyclone.",
+        precautions: [
+
+            ["🚨 Follow official evacuation instructions",
+             "Authorities use hazard information to direct people away from the most dangerous areas."],
+
+            ["🏠 Shelter in a strong building",
+             "A sturdy shelter provides protection from strong winds and flying debris."],
+
+            ["🌊 Avoid coastal and flooded areas",
+             "Storm surge and flooding can make coastal areas dangerous."],
+
+            ["📻 Monitor emergency updates",
+             "Conditions can change quickly and officials may issue new instructions."],
+
+            ["💧 Protect drinking water",
+             "Storm damage can interrupt or contaminate local water supplies."],
+
+            ["🔋 Save emergency power",
+             "Backup electricity can keep critical communication and services operating."]
+        ]
+    },
+
+
+    typhoon: {
+        title: "🌀 TYPHOON SIMULATION",
+        description:
+            "The island is practicing its response to a simulated typhoon.",
+        precautions: [
+
+            ["🚨 Follow evacuation instructions",
+             "Official evacuation orders move people away from the highest-risk areas."],
+
+            ["🏠 Shelter indoors",
+             "Indoor shelter reduces exposure to dangerous winds and debris."],
+
+            ["🌊 Stay away from floodwater",
+             "Floodwater can contain hidden hazards and strong currents."],
+
+            ["📱 Monitor official alerts",
+             "Weather and emergency conditions can change rapidly."],
+
+            ["🔋 Protect emergency electricity",
+             "Backup power supports communications and critical services."],
+
+            ["💧 Keep clean water available",
+             "Storm damage may temporarily interrupt water service."]
+        ]
+    },
+
+
+    flood: {
+        title: "🌊 FLOODING SIMULATION",
+        description:
+            "The island is practicing its response to a simulated major flooding event.",
+        precautions: [
+
+            ["🚨 Move to higher ground when instructed",
+             "Higher ground reduces exposure to rising water."],
+
+            ["🚫 Never walk or drive through dangerous floodwater",
+             "Floodwater can be deeper, faster and more hazardous than it appears."],
+
+            ["📻 Monitor official warnings",
+             "Flood conditions can change quickly as rainfall and water levels change."],
+
+            ["💧 Protect drinking water",
+             "Floodwater can contaminate water systems."],
+
+            ["🔋 Protect emergency power",
+             "Keeping power available supports communications and emergency services."],
+
+            ["🎒 Keep emergency supplies ready",
+             "Supplies are useful if roads become blocked or services are disrupted."]
+        ]
+    },
+
+
+    wildfire: {
+        title: "🔥 WILDFIRE SIMULATION",
+        description:
+            "The island is practicing its response to a simulated wildfire spreading toward communities.",
+        precautions: [
+
+            ["🚨 Evacuate when officials order it",
+             "Leaving early helps people avoid rapidly changing fire conditions."],
+
+            ["🌲 Stay away from active fire zones",
+             "Fire can spread unpredictably through vegetation and wind."],
+
+            ["📻 Monitor emergency alerts",
+             "Officials can change evacuation zones as the fire moves."],
+
+            ["🏠 Keep doors and windows closed when smoke is heavy",
+             "Reducing outdoor air entering a building can lower smoke exposure."],
+
+            ["🚗 Keep evacuation routes clear",
+             "Clear roads allow residents and emergency responders to move safely."],
+
+            ["🐕 Bring pets with you",
+             "Pets can also be affected by smoke and rapidly changing fire conditions."]
+        ]
+    },
+
+
+    earthquake: {
+        title: "🌎 EARTHQUAKE SIMULATION",
+        description:
+            "The island is practicing its response to a simulated major earthquake.",
+        precautions: [
+
+            ["⬇️ Drop, cover and hold on",
+             "This helps protect people from falling objects and debris."],
+
+            ["🚪 Stay away from damaged buildings",
+             "Structures can remain unstable after the shaking stops."],
+
+            ["📻 Monitor official instructions",
+             "Authorities may provide information about damaged areas and hazards."],
+
+            ["🔥 Watch for secondary hazards",
+             "Earthquakes can damage utilities and infrastructure."],
+
+            ["🚨 Be prepared for aftershocks",
+             "Additional shaking can happen after the main earthquake."],
+
+            ["💧 Protect drinking water",
+             "Infrastructure damage can interrupt or contaminate water supplies."]
+        ]
+    },
+
+
+    tsunami: {
+        title: "🌊 TSUNAMI SIMULATION",
+        description:
+            "The island is practicing its response to a simulated tsunami threat.",
+        precautions: [
+
+            ["🚨 Move inland or to higher ground when instructed",
+             "Higher ground reduces exposure to tsunami waves."],
+
+            ["🌊 Stay away from the shoreline",
+             "Tsunami waves can arrive in multiple surges."],
+
+            ["📻 Follow official tsunami alerts",
+             "Authorities use monitoring systems to provide evacuation information."],
+
+            ["🗺️ Know the evacuation route",
+             "Knowing where to go saves valuable time during an emergency."],
+
+            ["⏳ Do not return until officials say it is safe",
+             "Later waves and dangerous currents may continue after the first wave."]
+        ]
+    },
+
+
+    cold: {
+        title: "❄️ EXTREME COLD SIMULATION",
+        description:
+            "The island is practicing its response to a simulated extreme-cold event.",
+        precautions: [
+
+            ["🏠 Stay in a warm shelter",
+             "Shelter reduces exposure to dangerous cold conditions."],
+
+            ["🔥 Protect heating systems",
+             "Reliable heating helps prevent dangerous indoor temperatures."],
+
+            ["📻 Monitor weather alerts",
+             "Temperatures and conditions can change quickly."],
+
+            ["💧 Protect water systems",
+             "Extreme cold can damage or freeze water infrastructure."],
+
+            ["🔋 Save backup power",
+             "Backup electricity can keep heating and communications available."]
+        ]
+    },
+
+
+    landslide: {
+        title: "⛰️ LANDSLIDE SIMULATION",
+        description:
+            "The island is practicing its response to a simulated landslide threat after heavy rainfall.",
+        precautions: [
+
+            ["🚨 Leave threatened areas when instructed",
+             "Landslides can happen quickly with little warning."],
+
+            ["⛰️ Stay away from unstable slopes",
+             "Additional soil or rock movement can occur after the first slide."],
+
+            ["🌧️ Monitor rainfall warnings",
+             "Heavy rainfall can increase the likelihood of slope failure."],
+
+            ["🛣️ Avoid blocked or damaged roads",
+             "Roads near landslides may be unstable or unsafe."],
+
+            ["📻 Follow official updates",
+             "Authorities can identify newly threatened areas."]
+        ]
+    },
+
+
+    storm: {
+        title: "🌨️ SEVERE STORM SIMULATION",
+        description:
+            "The island is practicing its response to a simulated severe storm.",
+        precautions: [
+
+            ["🏠 Shelter indoors",
+             "Indoor shelter reduces exposure to strong winds, lightning and debris."],
+
+            ["📻 Monitor weather alerts",
+             "Storm conditions can change quickly."],
+
+            ["🔋 Charge communication devices",
+             "Charged devices help people receive emergency information."],
+
+            ["🌊 Avoid flooded areas",
+             "Floodwater can hide dangerous conditions."],
+
+            ["🚗 Avoid unnecessary travel",
+             "Severe weather can make roads hazardous."]
+        ]
+    }
+
+};
+
+
+/* =========================================================
+   WEATHER VARIABLES
+========================================================= */
+
+let currentWeather = null;
+
+
+/* =========================================================
+   GET LIVE WEATHER
+========================================================= */
+
+async function getWeather(data) {
+
+    try {
+
+        const url =
+        `https://api.open-meteo.com/v1/forecast?latitude=${data.lat}&longitude=${data.lon}&current=temperature_2m,precipitation,weather_code,wind_speed_10m&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto`;
+
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error("Weather request failed");
+        }
+
+        const weather = await response.json();
+
+        currentWeather = weather.current;
+
+        updateWeather(weather.current);
+
+    } catch (error) {
+
+        document.getElementById("weatherIcon").innerHTML = "⚠️";
+
+        document.getElementById("weatherDescription").innerHTML =
+            "Live weather is temporarily unavailable.";
+
+        document.getElementById("weatherAlert").innerHTML =
+            "⚠️ Could not connect to the weather service.";
+
+    }
+}
+
+
+/* =========================================================
+   WEATHER DISPLAY
+========================================================= */
+
+function updateWeather(w) {
+
+    const temp = w.temperature_2m;
+    const wind = w.wind_speed_10m;
+    const rain = w.precipitation;
+    const code = w.weather_code;
+
+    let icon = "🌤️";
+    let description = "Partly cloudy";
+
+    if (code === 0) {
+        icon = "☀️";
+        description = "Clear sky";
+    }
+
+    else if (code <= 3) {
+        icon = "🌤️";
+        description = "Cloudy conditions";
+    }
+
+    else if (code >= 51 && code <= 67) {
+        icon = "🌧️";
+        description = "Rain";
+    }
+
+    else if (code >= 71 && code <= 77) {
+        icon = "❄️";
+        description = "Snow";
+    }
+
+    else if (code >= 80 && code <= 82) {
+        icon = "🌧️";
+        description = "Rain showers";
+    }
+
+    else if (code >= 95) {
+        icon = "⛈️";
+        description = "Thunderstorm";
+    }
+
+    document.getElementById("weatherIcon").innerHTML = icon;
+
+    document.getElementById("weatherDescription").innerHTML =
+        description;
+
+    document.getElementById("temperature").innerHTML =
+        Math.round(temp) + "°F";
+
+    document.getElementById("wind").innerHTML =
+        Math.round(wind) + " mph";
+
+    document.getElementById("rain").innerHTML =
+        rain + " mm";
+
+
+    /* WEATHER ALERT */
+
+    let message = "🟢 Current weather conditions are stable.";
+    let danger = false;
+
+    if (rain >= 10) {
+        message =
+            "🌧️ Heavy precipitation detected. Flooding risk may increase.";
+        danger = true;
+    }
+
+    if (wind >= 35) {
+        message =
+            "💨 Strong winds detected. Monitor official weather alerts.";
+        danger = true;
+    }
+
+    if (temp >= 95) {
+        message =
+            "🔥 Very high temperature detected. Water and energy demand may increase.";
+        danger = true;
+    }
+
+    if (code >= 95) {
+        message =
+            "⛈️ Thunderstorm conditions detected. Monitor official alerts.";
+        danger = true;
+    }
+
+    const status = document.getElementById("status");
+    const alert = document.getElementById("alert");
+
+    alert.innerHTML = message;
+
+    if (danger) {
+
+        status.innerHTML = "🟠 WEATHER WATCH";
+
+        status.style.background = "#65491f";
+
+        alert.classList.add("danger");
+
+    } else {
+
+        status.innerHTML = "🟢 NORMAL MODE";
+
+        status.style.background = "#18553e";
+
+        alert.classList.remove("danger");
+    }
+
+
+    /* ECO ESTIMATES */
+
+    let solar =
+        Math.max(
+            20,
+            Math.min(
+                100,
+                85 - rain * 2
+            )
+        );
+
+    let water =
+        Math.max(
+            30,
+            Math.min(
+                100,
+                80 + (rain > 5 ? 10 : 0) - (temp > 95 ? 20 : 0)
+            )
+        );
+
+    let energy =
+        Math.max(
+            30,
+            Math.min(
+                100,
+                60 + (temp > 90 ? 20 : 0)
+            )
+        );
+
+    let battery =
+        danger ? 60 : 80;
+
+
+    document.getElementById("solar").innerHTML =
+        Math.round(solar) + "%";
+
+    document.getElementById("solarBar").style.width =
+        solar + "%";
+
+
+    document.getElementById("water").innerHTML =
+        Math.round(water) + "%";
+
+    document.getElementById("waterBar").style.width =
+        water + "%";
+
+
+    document.getElementById("energy").innerHTML =
+        Math.round(energy) + "%";
+
+    document.getElementById("energyBar").style.width =
+        energy + "%";
+
+
+    document.getElementById("battery").innerHTML =
+        battery + "%";
+
+    document.getElementById("batteryBar").style.width =
+        battery + "%";
+
+
+
+
+
+
+/* =========================================================
+   CHANGE ISLAND
+========================================================= */
+
+function chooseIsland() {
+
+    const selected =
+        document.getElementById("islandSelect").value;
+
+    const data = islands[selected];
+
+    document.getElementById("islandName").innerHTML =
+        data.name;
+
+    document.getElementById("description").innerHTML =
+        data.description;
+
+    document.getElementById("climate").innerHTML =
+        data.climate;
+
+    document.getElementById("resource").innerHTML =
+        data.resource;
+
+    document.getElementById("risk").innerHTML =
+        data.risk;
+
+    document.getElementById("renewable").innerHTML =
+        data.renewable;
+
+    document.getElementById("priority").innerHTML =
+        data.priority;
+
+    document.getElementById("location").innerHTML =
+        data.location;
+
+
+    currentWeather = null;
+
+    getWeather(data);
+
+
+    document.getElementById("aiBox").innerHTML =
+
+        "🌦️ Weather is updating for <b>" +
+        data.name +
+        "</b>.<br><br>" +
+
+        "The island's primary emergency scenario is " +
+        "<b>" + data.risk + "</b>.<br><br>" +
+
+        "Click <b>🤖 Run Eco Island AI</b> to determine the first priority.";
+
+    
+    resetEmergency();
+}
+
+
+/* =========================================================
+   AI PRIORITY
+========================================================= */
+
+function runAI() {
+
+    const selected =
+        document.getElementById("islandSelect").value;
+
+    const data = islands[selected];
+
+    if (!currentWeather) {
+
+        document.getElementById("aiBox").innerHTML =
+            "⏳ Weather data is still loading. Try again in a moment.";
+
+        return;
+    }
+
+    const w = currentWeather;
+
+    let firstPriority = "";
+
+    if (w.wind >= 35) {
+
+        firstPriority =
+            "💨 <b>Protect people from strong winds first.</b><br>" +
+            "Secure vulnerable buildings and follow any official warnings.";
+
+    }
+
+    else if (w.precipitation >= 10) {
+
+        firstPriority =
+            "🌧️ <b>Protect flood-prone areas first.</b><br>" +
+            "Heavy precipitation can increase flooding risk.";
+
+    }
+
+    else if (w.temperature_2m >= 95) {
+
+        firstPriority =
+            "💧 <b>Protect drinking water first.</b><br>" +
+            "Extreme heat can increase water demand.";
+
+    }
+
+    else {
+
+        firstPriority =
+            "📻 <b>Monitor official information first.</b><br>" +
+            "No major weather threshold is currently detected.";
+    }
+
+
+    document.getElementById("aiBox").innerHTML =
+
+        "<span class='green'>🤖 ECO ISLAND AI ANALYSIS</span>" +
+
+        "<br><br>" +
+
+        "<b>Island:</b> " +
+        data.name +
+
+        "<br>" +
+
+        "<b>Primary hazard:</b> " +
+        data.risk +
+
+        "<br>" +
+
+        "<b>Current weather:</b> " +
+        Math.round(w.temperature_2m) +
+        "°F, " +
+        Math.round(w.wind_speed_10m) +
+        " mph winds, " +
+        w.precipitation +
+        " mm precipitation." +
+
+        "<br><br>" +
+
+        "<b>🎯 What needs to happen first?</b>" +
+
+        "<br><br>" +
+
+        firstPriority +
+
+        "<br><br>" +
+
+        "🏝️ <b>Island-specific priority:</b> " +
+        data.priority;
+}
+
+
+/* =========================================================
+   START EMERGENCY
+========================================================= */
+
+function startEmergency() {
+
+    const selected =
+        document.getElementById("islandSelect").value;
+
+    const data = islands[selected];
+
+    const emergency =
+        emergencies[data.hazard];
+
+
+    document.getElementById("emergencySection").style.display =
+        "block";
+
+
+    document.getElementById("emergencyTitle").innerHTML =
+        emergency.title;
+
+
+    document.getElementById("emergencyDescription").innerHTML =
+        emergency.description;
+
+
+    let weatherText = "Live weather unavailable.";
+
+    if (currentWeather) {
+
+        weatherText =
+            Math.round(currentWeather.temperature_2m) +
+            "°F | " +
+            Math.round(currentWeather.wind_speed_10m) +
+            " mph wind | " +
+            currentWeather.precipitation +
+            " mm precipitation";
+
+    }
+
+
+    document.getElementById("emergencyWeather").innerHTML =
+        weatherText;
+
+
+    /* CREATE PRECAUTIONS */
+
+    const container =
+        document.getElementById("precautions");
+
+    container.innerHTML = "";
+
+
+    emergency.precautions.forEach(function(item, index) {
+
+        const div =
+            document.createElement("div");
+
+        div.className = "precaution";
+
+        div.innerHTML =
+
+            "<div class='precautionTitle'>" +
+
+            (index + 1) +
+            ". " +
+            item[0] +
+
+            "</div>" +
+
+            "<div class='why'>" +
+
+            "💡 Why it matters: " +
+
+            item[1] +
+
+            "</div>";
+
+
+        container.appendChild(div);
+
+    });
+
+
+    /* FIRST PRIORITY */
+
+    document.getElementById("firstPriority").innerHTML =
+
+        "<span class='red'>" +
+
+        "🚨 FIRST PRIORITY: PROTECT PEOPLE" +
+
+        "</span>" +
+
+        "<br><br>" +
+
+        "The community should immediately follow " +
+
+        "official emergency instructions and move away " +
+
+        "from the specific hazard zone if authorities " +
+
+        "order an evacuation.";
+
+    
+    /* STATUS */
+
+    document.getElementById("status").innerHTML =
+        "🚨 SIMULATION MODE";
+
+    document.getElementById("status").style.background =
+        "#542d2b";
+
+    
+    /* SCROLL */
+
+    document.getElementById("emergencySection")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+}
+
+
+/* =========================================================
+   RESET EMERGENCY
+========================================================= */
+
+function resetEmergency() {
+
+    document.getElementById("emergencySection").style.display =
+        "none";
+
+    document.getElementById("status").innerHTML =
+        "🟢 NORMAL MODE";
+
+    document.getElementById("status").style.background =
+        "#18553e";
+}
+
+
+/* =========================================================
+   START APP
+========================================================= */
+
+chooseIsland();
+
+</script>
+
+</body>
+</html>html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Eco Island</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #071a20;
+    color: white;
+}
+
+header {
+    background: #0b292f;
+    padding: 22px 35px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #24545a;
+}
+
+.logo {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.subtitle {
+    color: #9bbfc2;
+    margin-top: 5px;
+}
+
+.status {
+    padding: 10px 18px;
+    border-radius: 25px;
+    background: #18553e;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px;
+}
+
+.hero {
+    text-align: center;
+    padding: 15px 0 25px;
+}
+
+.hero h1 {
+    font-size: 44px;
+    margin-bottom: 8px;
+}
+
+.hero p {
+    color: #9bbfc2;
+}
+
+.card {
+    background: #0d252c;
+    border: 1px solid #20464c;
+    border-radius: 18px;
+    padding: 22px;
+    margin-bottom: 20px;
+}
+
+select {
+    width: 100%;
+    padding: 16px;
+    background: #102f37;
+    color: white;
+    border: 2px solid #28545c;
+    border-radius: 12px;
+    font-size: 16px;
+}
+
+.infoGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.info {
+    background: #102f37;
+    padding: 17px;
+    border-radius: 12px;
+}
+
+.label {
+    color: #8eafb4;
+    font-size: 12px;
+    margin-bottom: 7px;
+}
+
+.value {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.weather {
+    font-size: 42px;
+    text-align: center;
+    padding: 15px;
+}
+
+.weatherText {
+    text-align: center;
+    color: #9bbfc2;
+}
+
+.metrics {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.metric {
+    background: #102f37;
+    padding: 15px;
+    border-radius: 12px;
+}
+
+.metric-title {
+    color: #9bb9bd;
+    font-size: 13px;
+}
+
+.metric-value {
+    font-size: 25px;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.bar {
+    height: 8px;
+    background: #28464d;
+    border-radius: 10px;
+    margin-top: 8px;
+}
+
+.fill {
+    height: 100%;
+    background: #57ca91;
+    border-radius: 10px;
+    transition: 1s;
+}
+
+button {
+    border: none;
+    padding: 13px 18px;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.ai {
+    background: #5dce9b;
+    color: #062016;
+}
+
+.emergency {
+    background: #e8786d;
+    color: white;
+}
+
+.reset {
+    background: #28464d;
+    color: white;
+}
+
+.alert {
+    margin-top: 15px;
+    padding: 15px;
+    border-radius: 10px;
+    background: #163d31;
+    color: #9be3bc;
+}
+
+.danger {
+    background: #472827;
+    color: #ffaaa2;
+}
+
+.aiBox {
+    background: #102e37;
+    padding: 18px;
+    border-radius: 12px;
+    line-height: 1.7;
+}
+
+.green {
+    color: #63d39a;
+}
+
+.yellow {
+    color: #f1ca61;
+}
+
+.red {
+    color: #ff8178;
+}
+
+
+.emergencyHeader {
+    background: #472827;
+    border: 1px solid #8c4d48;
+    padding: 20px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+}
+
+.emergencyHeader h2 {
+    margin-top: 0;
+    color: #ffaaa2;
+}
+
+.precaution {
+    background: #102f37;
+    border-left: 5px solid #5dce9b;
+    padding: 16px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+}
+
+.precautionTitle {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.why {
+    color: #9bbfc2;
+    font-size: 14px;
+}
+
+.liveTag {
+    display: inline-block;
+    background: #18553e;
+    color: #9be3bc;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-left: 8px;
+}
+
+.simTag {
+    display: inline-block;
+    background: #542d2b;
+    color: #ffaaa2;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-left: 8px;
+}
+
+footer {
+    text-align: center;
+    color: #65878c;
+    padding: 30px;
+}
+
+@media(max-width:700px) {
+    .infoGrid,
+    .metrics {
+        grid-template-columns: 1fr;
+    }
+
+    header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .hero h1 {
+        font-size: 34px;
+    }
+}
+</style>
+</head>
+
+
+<body>
+
+<header>
+
+    <div>
+        <div class="logo">🌱 Eco Island</div>
+
+        <div class="subtitle">
+            Smart Island Resource & Emergency System
+        </div>
+    </div>
+
+    <div class="status" id="status">
+        🟢 NORMAL MODE
+    </div>
+
+</header>
+
+
+<div class="container">
+
+    <div class="hero">
+
+        <h1>🏝️ Eco Island</h1>
+
+        <p>
+            Live weather + island-specific emergency planning
+        </p>
+
+    </div>
+
+
+    <!-- ISLAND SELECTOR -->
 
     <div class="card">
 
-        <h2>🛡️ Island Resilience</h2>
+        <h2>🌍 Choose an Island</h2>
 
-        <div class="score">
+        <select id="islandSelect" onchange="chooseIsland()">
 
-            <div class="scoreNumber" id="score">
-                --
+            <option value="bali">🇮🇩 Bali</option>
+            <option value="maldives">🇲🇻 Maldives</option>
+            <option value="hawaii">🇺🇸 Hawaii</option>
+            <option value="iceland">🇮🇸 Iceland</option>
+            <option value="greenland">🇬🇱 Greenland</option>
+            <option value="madagascar">🇲🇬 Madagascar</option>
+            <option value="srilanka">🇱🇰 Sri Lanka</option>
+            <option value="jamaica">🇯🇲 Jamaica</option>
+            <option value="cuba">🇨🇺 Cuba</option>
+            <option value="cyprus">🇨🇾 Cyprus</option>
+            <option value="crete">🇬🇷 Crete</option>
+            <option value="sardinia">🇮🇹 Sardinia</option>
+            <option value="sicily">🇮🇹 Sicily</option>
+            <option value="corsica">🇫🇷 Corsica</option>
+            <option value="tasmania">🇦🇺 Tasmania</option>
+            <option value="northisland">🇳🇿 North Island</option>
+            <option value="southisland">🇳🇿 South Island</option>
+            <option value="borneo">🌏 Borneo</option>
+            <option value="java">🇮🇩 Java</option>
+            <option value="sumatra">🇮🇩 Sumatra</option>
+            <option value="luzon">🇵🇭 Luzon</option>
+            <option value="mindanao">🇵🇭 Mindanao</option>
+            <option value="okinawa">🇯🇵 Okinawa</option>
+            <option value="honshu">🇯🇵 Honshu</option>
+            <option value="taiwan">🇹🇼 Taiwan</option>
+            <option value="puertorico">🇵🇷 Puerto Rico</option>
+            <option value="bahamas">🇧🇸 Bahamas</option>
+            <option value="barbados">🇧🇧 Barbados</option>
+            <option value="fiji">🇫🇯 Fiji</option>
+            <option value="samoa">🇼🇸 Samoa</option>
+            <option value="tonga">🇹🇴 Tonga</option>
+            <option value="tahiti">🇵🇫 Tahiti</option>
+            <option value="guam">🇬🇺 Guam</option>
+            <option value="seychelles">🇸🇨 Seychelles</option>
+            <option value="mauritius">🇲🇺 Mauritius</option>
+            <option value="zanzibar">🇹🇿 Zanzibar</option>
+            <option value="mallorca">🇪🇸 Mallorca</option>
+            <option value="ibiza">🇪🇸 Ibiza</option>
+            <option value="canary">🇪🇸 Canary Islands</option>
+            <option value="azores">🇵🇹 Azores</option>
+            <option value="madeira">🇵🇹 Madeira</option>
+            <option value="vancouver">🇨🇦 Vancouver Island</option>
+            <option value="newfoundland">🇨🇦 Newfoundland</option>
+            <option value="longisland">🇺🇸 Long Island</option>
+
+        </select>
+
+    </div>
+
+
+    <!-- ISLAND DESCRIPTION -->
+
+    <div class="card">
+
+        <h2 id="islandName">🇮🇩 Bali</h2>
+
+        <p id="description"></p>
+
+        <div class="infoGrid">
+
+            <div class="info">
+                <div class="label">CLIMATE</div>
+                <div class="value" id="climate"></div>
             </div>
 
-            <p>
-                Current resilience estimate
-            </p>
+            <div class="info">
+                <div class="label">MAIN RESOURCE</div>
+                <div class="value" id="resource"></div>
+            </div>
+
+            <div class="info">
+                <div class="label">BIGGEST WEATHER / NATURAL RISK</div>
+                <div class="value" id="risk"></div>
+            </div>
+
+            <div class="info">
+                <div class="label">BEST RENEWABLE</div>
+                <div class="value" id="renewable"></div>
+            </div>
+
+            <div class="info">
+                <div class="label">COMMUNITY PRIORITY</div>
+                <div class="value" id="priority"></div>
+            </div>
+
+            <div class="info">
+                <div class="label">LOCATION</div>
+                <div class="value" id="location"></div>
+            </div>
 
         </div>
 
     </div>
 
+
+    <!-- LIVE WEATHER -->
+
+    <div class="card">
+
+        <h2>
+            🌦️ Live Weather
+            <span class="liveTag">LIVE DATA</span>
+        </h2>
+
+        <div class="weather" id="weatherIcon">
+            ⏳
+        </div>
+
+        <div class="weatherText" id="weatherDescription">
+            Loading weather...
+        </div>
+
+        <br>
+
+        <div class="infoGrid">
+
+            <div class="info">
+                <div class="label">TEMPERATURE</div>
+                <div class="value" id="temperature">--</div>
+            </div>
+
+            <div class="info">
+                <div class="label">WIND</div>
+                <div class="value" id="wind">--</div>
+            </div>
+
+            <div class="info">
+                <div class="label">PRECIPITATION</div>
+                <div class="value" id="rain">--</div>
+            </div>
+
+        </div>
+
+        <div class="alert" id="weatherAlert">
+            Connecting to live weather...
+        </div>
+
+    </div>
+
+
+    <!-- ECO DASHBOARD -->
+
+    <div class="card">
+
+        <h2>📊 Eco Island Dashboard</h2>
+
+        <div class="metrics">
+
+            <div class="metric">
+
+                <div class="metric-title">
+                    ☀️ Solar Potential
+                </div>
+
+                <div class="metric-value" id="solar">
+                    --
+                </div>
+
+                <div class="bar">
+                    <div class="fill" id="solarBar" style="width:0%"></div>
+                </div>
+
+            </div>
+
+
+            <div class="metric">
+
+                <div class="metric-title">
+                    🔋 Emergency Battery
+                </div>
+
+                <div class="metric-value" id="battery">
+                    --
+                </div>
+
+                <div class="bar">
+                    <div class="fill" id="batteryBar" style="width:0%"></div>
+                </div>
+
+            </div>
+
+
+            <div class="metric">
+
+                <div class="metric-title">
+                    💧 Water Security
+                </div>
+
+                <div class="metric-value" id="water">
+                    --
+                </div>
+
+                <div class="bar">
+                    <div class="fill" id="waterBar" style="width:0%"></div>
+                </div>
+
+            </div>
+
+
+            <div class="metric">
+
+                <div class="metric-title">
+                    ⚡ Energy Demand
+                </div>
+
+                <div class="metric-value" id="energy">
+                    --
+                </div>
+
+                <div class="bar">
+                    <div class="fill" id="energyBar" style="width:0%"></div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="alert" id="alert">
+            Weather analysis loading...
+        </div>
+
+    </div>
+
+
+    <!-- AI -->
+
+    <div class="card">
+
+        <h2>🤖 Eco Island AI</h2>
+
+        <p>
+            The AI combines the selected island's biggest hazard
+            with its current weather conditions.
+        </p>
+
+        <button class="ai" onclick="runAI()">
+            🤖 Run Eco Island AI
+        </button>
+
+        <div class="aiBox" id="aiBox" style="margin-top:15px;">
+
+            Choose an island and run the AI to determine
+            what the community should prioritize first.
+
+        </div>
+
+    </div>
+
+
+    <!-- EMERGENCY SIMULATION -->
+
+    <div class="card">
+
+        <h2>
+            🚨 Emergency Simulation
+            <span class="simTag">SIMULATION</span>
+        </h2>
+
+        <p>
+            This does NOT claim that an emergency is happening.
+            It creates a realistic practice scenario based on
+            the selected island's primary hazard.
+        </p>
+
+        <button class="emergency" onclick="startEmergency()">
+            🚨 Start Emergency Simulation
+        </button>
+
+        <button class="reset" onclick="resetEmergency()">
+            🔄 Reset
+        </button>
+
+    </div>
+
+
+    <!-- EMERGENCY OUTPUT -->
+
+    <div id="emergencySection" style="display:none;">
+
+        <div class="emergencyHeader">
+
+            <h2 id="emergencyTitle">
+                🚨 Emergency
+            </h2>
+
+            <p id="emergencyDescription"></p>
+
+            <p>
+                <b>Current live weather:</b>
+                <span id="emergencyWeather"></span>
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>
+                🛡️ Precautions to Follow
+            </h2>
+
+            <div id="precautions"></div>
+
+        </div>
+
+
+        <div class="card">
+
+            <h2>
+                🎯 First Priority
+            </h2>
+
+            <div class="aiBox" id="firstPriority"></div>
+
+        </div>
+
+    </div>
 </div>
 
 
