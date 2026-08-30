@@ -1595,212 +1595,226 @@ let currentWeather = null;
 ========================================================= */
 
 async function getWeather(data) {
+    const weatherIcon = document.getElementById("weatherIcon");
+    const weatherDescription = document.getElementById("weatherDescription");
+    const weatherAlert = document.getElementById("weatherAlert");
+
+    weatherIcon.innerHTML = "⏳";
+    weatherDescription.innerHTML = "Loading live weather...";
+    weatherAlert.innerHTML = "Connecting to Open-Meteo live weather data...";
 
     try {
+        /* Open-Meteo provides current conditions for the selected
+           island's latitude and longitude. */
+        const url = new URL("https://api.open-meteo.com/v1/forecast");
 
-        const url =
-        `https://api.open-meteo.com/v1/forecast?latitude=${data.lat}&longitude=${data.lon}&current=temperature_2m,precipitation,weather_code,wind_speed_10m&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=auto`;
+        url.searchParams.set("latitude", data.lat);
+        url.searchParams.set("longitude", data.lon);
+        url.searchParams.set(
+            "current",
+            "temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,wind_gusts_10m"
+        );
+        url.searchParams.set("temperature_unit", "fahrenheit");
+        url.searchParams.set("wind_speed_unit", "mph");
+        url.searchParams.set("precipitation_unit", "mm");
+        url.searchParams.set("timezone", "auto");
+        url.searchParams.set("forecast_days", "1");
 
-        const response = await fetch(url);
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 10000);
+
+        const response = await fetch(url.toString(), {
+            method: "GET",
+            cache: "no-store",
+            signal: controller.signal
+        });
+
+        clearTimeout(timeout);
 
         if (!response.ok) {
-            throw new Error("Weather request failed");
+            throw new Error("Weather service returned HTTP " + response.status);
         }
 
         const weather = await response.json();
 
-        currentWeather = weather.current;
+        if (!weather.current) {
+            throw new Error("No current weather data was returned.");
+        }
 
+        currentWeather = weather.current;
         updateWeather(weather.current);
 
+        const updatedTime = weather.current.time
+            ? new Date(weather.current.time).toLocaleString([], {
+                dateStyle: "short",
+                timeStyle: "short"
+            })
+            : "just now";
+
+        weatherAlert.innerHTML +=
+            "<br><small>Updated: " + updatedTime + " • Source: Open-Meteo</small>";
+
     } catch (error) {
+        console.error("Weather error:", error);
+        currentWeather = null;
 
-        document.getElementById("weatherIcon").innerHTML = "⚠️";
-
-        document.getElementById("weatherDescription").innerHTML =
-            "Live weather is temporarily unavailable.";
-
-        document.getElementById("weatherAlert").innerHTML =
-            "⚠️ Could not connect to the weather service.";
-
+        weatherIcon.innerHTML = "⚠️";
+        weatherDescription.innerHTML = "Live weather could not be loaded.";
+        weatherAlert.innerHTML =
+            "🔴 <b>Live weather connection failed.</b><br>" +
+            "Check your internet connection, then refresh the page.<br>" +
+            "<small>Open-Meteo error: " + error.message + "</small>";
     }
 }
 
 
 /* =========================================================
-   WEATHER DISPLAY
+   UPDATE WEATHER DISPLAY
 ========================================================= */
 
-function updateWeather(w) {
+function updateWeather(weather) {
 
-    const temp = w.temperature_2m;
-    const wind = w.wind_speed_10m;
-    const rain = w.precipitation;
-    const code = w.weather_code;
-
-    let icon = "🌤️";
-    let description = "Partly cloudy";
-
-    if (code === 0) {
-        icon = "☀️";
-        description = "Clear sky";
-    }
-
-    else if (code <= 3) {
-        icon = "🌤️";
-        description = "Cloudy conditions";
-    }
-
-    else if (code >= 51 && code <= 67) {
-        icon = "🌧️";
-        description = "Rain";
-    }
-
-    else if (code >= 71 && code <= 77) {
-        icon = "❄️";
-        description = "Snow";
-    }
-
-    else if (code >= 80 && code <= 82) {
-        icon = "🌧️";
-        description = "Rain showers";
-    }
-
-    else if (code >= 95) {
-        icon = "⛈️";
-        description = "Thunderstorm";
-    }
-
-    document.getElementById("weatherIcon").innerHTML = icon;
-
-    document.getElementById("weatherDescription").innerHTML =
-        description;
+    const temperature = Number(weather.temperature_2m);
+    const wind = Number(weather.wind_speed_10m);
+    const gusts = Number(weather.wind_gusts_10m || 0);
+    const precipitation = Number(weather.precipitation || 0);
+    const code = Number(weather.weather_code);
 
     document.getElementById("temperature").innerHTML =
-        Math.round(temp) + "°F";
+        Math.round(temperature) + "°F";
 
     document.getElementById("wind").innerHTML =
         Math.round(wind) + " mph";
 
     document.getElementById("rain").innerHTML =
-        rain + " mm";
+        precipitation.toFixed(1) + " mm";
 
+    /* WMO weather-code descriptions */
+    let description = "Current conditions";
+    let icon = "🌤️";
 
-    /* WEATHER ALERT */
-
-    let message = "🟢 Current weather conditions are stable.";
-    let danger = false;
-
-    if (rain >= 10) {
-        message =
-            "🌧️ Heavy precipitation detected. Flooding risk may increase.";
-        danger = true;
+    if (code === 0) {
+        description = "Clear sky";
+        icon = "☀️";
+    } else if (code === 1) {
+        description = "Mainly clear";
+        icon = "🌤️";
+    } else if (code === 2) {
+        description = "Partly cloudy";
+        icon = "⛅";
+    } else if (code === 3) {
+        description = "Overcast";
+        icon = "☁️";
+    } else if ([45, 48].includes(code)) {
+        description = "Foggy";
+        icon = "🌫️";
+    } else if ([51, 53, 55].includes(code)) {
+        description = "Drizzle";
+        icon = "🌦️";
+    } else if ([56, 57].includes(code)) {
+        description = "Freezing drizzle";
+        icon = "🌧️";
+    } else if ([61, 63, 65].includes(code)) {
+        description = "Rain";
+        icon = "🌧️";
+    } else if ([66, 67].includes(code)) {
+        description = "Freezing rain";
+        icon = "🌧️";
+    } else if ([71, 73, 75, 77].includes(code)) {
+        description = "Snow";
+        icon = "❄️";
+    } else if ([80, 81, 82].includes(code)) {
+        description = "Rain showers";
+        icon = "🌦️";
+    } else if ([85, 86].includes(code)) {
+        description = "Snow showers";
+        icon = "🌨️";
+    } else if (code === 95) {
+        description = "Thunderstorm";
+        icon = "⛈️";
+    } else if ([96, 99].includes(code)) {
+        description = "Thunderstorm with hail";
+        icon = "⛈️";
     }
 
-    if (wind >= 35) {
-        message =
-            "💨 Strong winds detected. Monitor official weather alerts.";
-        danger = true;
+    document.getElementById("weatherIcon").innerHTML = icon;
+    document.getElementById("weatherDescription").innerHTML =
+        description + " • " + Math.round(temperature) + "°F";
+
+    /* Analyze current conditions for the dashboard */
+    let solar = 70;
+    let battery = 85;
+    let water = 85;
+    let energy = 45;
+
+    if ([0, 1].includes(code)) {
+        solar += 20;
+    } else if ([2, 3].includes(code)) {
+        solar += 5;
+    } else if (precipitation > 0) {
+        solar -= 10;
     }
 
-    if (temp >= 95) {
-        message =
-            "🔥 Very high temperature detected. Water and energy demand may increase.";
-        danger = true;
+    if (precipitation >= 10) {
+        water += 5;
+        energy += 10;
+    }
+
+    if (temperature >= 95) {
+        water -= 15;
+        energy += 20;
+    } else if (temperature <= 40) {
+        energy += 15;
+    }
+
+    if (wind >= 35 || gusts >= 50) {
+        battery -= 10;
+        energy += 15;
     }
 
     if (code >= 95) {
-        message =
-            "⛈️ Thunderstorm conditions detected. Monitor official alerts.";
-        danger = true;
+        solar -= 15;
+        battery -= 5;
     }
 
-    const status = document.getElementById("status");
-    const alert = document.getElementById("alert");
+    solar = Math.max(0, Math.min(100, Math.round(solar)));
+    battery = Math.max(0, Math.min(100, Math.round(battery)));
+    water = Math.max(0, Math.min(100, Math.round(water)));
+    energy = Math.max(0, Math.min(100, Math.round(energy)));
 
-    alert.innerHTML = message;
+    document.getElementById("solar").innerHTML = solar + "%";
+    document.getElementById("battery").innerHTML = battery + "%";
+    document.getElementById("water").innerHTML = water + "%";
+    document.getElementById("energy").innerHTML = energy + "%";
 
-    if (danger) {
+    document.getElementById("solarBar").style.width = solar + "%";
+    document.getElementById("batteryBar").style.width = battery + "%";
+    document.getElementById("waterBar").style.width = water + "%";
+    document.getElementById("energyBar").style.width = energy + "%";
 
-        status.innerHTML = "🟠 WEATHER WATCH";
+    let alertText = "🟢 Current conditions are relatively stable.";
 
-        status.style.background = "#65491f";
-
-        alert.classList.add("danger");
-
-    } else {
-
-        status.innerHTML = "🟢 NORMAL MODE";
-
-        status.style.background = "#18553e";
-
-        alert.classList.remove("danger");
+    if (wind >= 35 || gusts >= 50) {
+        alertText = "🟠 Strong wind conditions detected — monitor official weather alerts.";
+    } else if (precipitation >= 10) {
+        alertText = "🟠 Heavy precipitation detected — monitor flooding and drainage conditions.";
+    } else if (temperature >= 95) {
+        alertText = "🟠 High temperature detected — monitor heat and water demand.";
+    } else if (code >= 95) {
+        alertText = "🟠 Thunderstorm conditions detected — monitor official warnings.";
     }
 
+    document.getElementById("alert").innerHTML = alertText;
 
-    /* ECO ESTIMATES */
-
-    let solar =
-        Math.max(
-            20,
-            Math.min(
-                100,
-                85 - rain * 2
-            )
-        );
-
-    let water =
-        Math.max(
-            30,
-            Math.min(
-                100,
-                80 + (rain > 5 ? 10 : 0) - (temp > 95 ? 20 : 0)
-            )
-        );
-
-    let energy =
-        Math.max(
-            30,
-            Math.min(
-                100,
-                60 + (temp > 90 ? 20 : 0)
-            )
-        );
-
-    let battery =
-        danger ? 60 : 80;
-
-
-    document.getElementById("solar").innerHTML =
-        Math.round(solar) + "%";
-
-    document.getElementById("solarBar").style.width =
-        solar + "%";
-
-
-    document.getElementById("water").innerHTML =
-        Math.round(water) + "%";
-
-    document.getElementById("waterBar").style.width =
-        water + "%";
-
-
-    document.getElementById("energy").innerHTML =
-        Math.round(energy) + "%";
-
-    document.getElementById("energyBar").style.width =
-        energy + "%";
-
-
-    document.getElementById("battery").innerHTML =
-        battery + "%";
-
-    document.getElementById("batteryBar").style.width =
-        battery + "%";
-
-
-
-
+    /* Keep the AI and emergency simulation synced with the latest data. */
+    return {
+        temperature,
+        wind,
+        gusts,
+        precipitation,
+        code
+    };
+}
 
 
 /* =========================================================
