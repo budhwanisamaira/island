@@ -1,2121 +1,494 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Eco Island</title>
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Eco Island — Smart Island Emergency Management</title>
+<meta name="description" content="Real-time environmental monitoring and AI-assisted emergency resource management for island communities." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
-* {
-    box-sizing: border-box;
+:root{
+  --ocean-950:#071b24; --ocean-900:#0a222d; --ocean-800:#0f2e3b; --ocean-700:#163d4d; --ocean-600:#1b4a5a;
+  --teal-400:#4fd1c5; --teal-300:#7fe0d6; --amber-300:#f5cd7e; --amber-400:#f2b84b;
+  --coral-500:#e8613c; --coral-400:#f0805f; --sand-100:#ede6d6; --sand-050:#f6f2e8;
+  --fog-300:#9fb4ba; --fog-500:#6c8890;
+  --font-display:'Space Grotesk','Inter',sans-serif; --font-body:'Inter',system-ui,sans-serif; --font-mono:'IBM Plex Mono',ui-monospace,monospace;
 }
-
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #071a20;
-    color: white;
-}
-
-header {
-    background: #0b292f;
-    padding: 22px 35px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #24545a;
-}
-
-.logo {
-    font-size: 30px;
-    font-weight: bold;
-}
-
-.subtitle {
-    color: #9bbfc2;
-    margin-top: 5px;
-}
-
-.status {
-    padding: 10px 18px;
-    border-radius: 25px;
-    background: #18553e;
-    font-weight: bold;
-}
-
-.container {
-    max-width: 1100px;
-    margin: auto;
-    padding: 25px;
-}
-
-.hero {
-    text-align: center;
-    padding: 15px 0 25px;
-}
-
-.hero h1 {
-    font-size: 44px;
-    margin-bottom: 8px;
-}
-
-.hero p {
-    color: #9bbfc2;
-}
-
-.card {
-    background: #0d252c;
-    border: 1px solid #20464c;
-    border-radius: 18px;
-    padding: 22px;
-    margin-bottom: 20px;
-}
-
-select {
-    width: 100%;
-    padding: 16px;
-    background: #102f37;
-    color: white;
-    border: 2px solid #28545c;
-    border-radius: 12px;
-    font-size: 16px;
-}
-
-.infoGrid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-}
-
-.info {
-    background: #102f37;
-    padding: 17px;
-    border-radius: 12px;
-}
-
-.label {
-    color: #8eafb4;
-    font-size: 12px;
-    margin-bottom: 7px;
-}
-
-.value {
-    font-size: 17px;
-    font-weight: bold;
-}
-
-.weather {
-    font-size: 42px;
-    text-align: center;
-    padding: 15px;
-}
-
-.weatherText {
-    text-align: center;
-    color: #9bbfc2;
-}
-
-.metrics {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-}
-
-.metric {
-    background: #102f37;
-    padding: 15px;
-    border-radius: 12px;
-}
-
-.metric-title {
-    color: #9bb9bd;
-    font-size: 13px;
-}
-
-.metric-value {
-    font-size: 25px;
-    font-weight: bold;
-    margin-top: 5px;
-}
-
-.bar {
-    height: 8px;
-    background: #28464d;
-    border-radius: 10px;
-    margin-top: 8px;
-}
-
-.fill {
-    height: 100%;
-    background: #57ca91;
-    border-radius: 10px;
-    transition: 1s;
-}
-
-button {
-    border: none;
-    padding: 13px 18px;
-    border-radius: 10px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 15px;
-}
-
-.ai {
-    background: #5dce9b;
-    color: #062016;
-}
-
-.emergency {
-    background: #e8786d;
-    color: white;
-}
-
-.reset {
-    background: #28464d;
-    color: white;
-}
-
-.alert {
-    margin-top: 15px;
-    padding: 15px;
-    border-radius: 10px;
-    background: #163d31;
-    color: #9be3bc;
-}
-
-.danger {
-    background: #472827;
-    color: #ffaaa2;
-}
-
-.aiBox {
-    background: #102e37;
-    padding: 18px;
-    border-radius: 12px;
-    line-height: 1.7;
-}
-
-.green {
-    color: #63d39a;
-}
-
-.yellow {
-    color: #f1ca61;
-}
-
-.red {
-    color: #ff8178;
-}
-
-
-.emergencyHeader {
-    background: #472827;
-    border: 1px solid #8c4d48;
-    padding: 20px;
-    border-radius: 14px;
-    margin-bottom: 20px;
-}
-
-.emergencyHeader h2 {
-    margin-top: 0;
-    color: #ffaaa2;
-}
-
-.precaution {
-    background: #102f37;
-    border-left: 5px solid #5dce9b;
-    padding: 16px;
-    margin-bottom: 12px;
-    border-radius: 10px;
-}
-
-.precautionTitle {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 6px;
-}
-
-.why {
-    color: #9bbfc2;
-    font-size: 14px;
-}
-
-.liveTag {
-    display: inline-block;
-    background: #18553e;
-    color: #9be3bc;
-    padding: 5px 10px;
-    border-radius: 20px;
-    font-size: 12px;
-    margin-left: 8px;
-}
-
-.simTag {
-    display: inline-block;
-    background: #542d2b;
-    color: #ffaaa2;
-    padding: 5px 10px;
-    border-radius: 20px;
-    font-size: 12px;
-    margin-left: 8px;
-}
-
-footer {
-    text-align: center;
-    color: #65878c;
-    padding: 30px;
-}
-
-@media(max-width:700px) {
-    .infoGrid,
-    .metrics {
-        grid-template-columns: 1fr;
-    }
-
-    header {
-        flex-direction: column;
-        gap: 15px;
-        text-align: center;
-    }
-
-    .hero h1 {
-        font-size: 34px;
-    }
-}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--ocean-950);color:var(--sand-050)}
+body{font-family:var(--font-body);-webkit-font-smoothing:antialiased}
+#root{min-height:100vh}
+.app{min-height:100vh;display:flex;flex-direction:column;background:radial-gradient(ellipse at top,var(--ocean-800) 0%,var(--ocean-950) 55%);padding:20px clamp(16px,4vw,48px) 48px;gap:20px;transition:background 400ms ease}
+.app--emergency{background:radial-gradient(ellipse at top,#2a1712 0%,var(--ocean-950) 55%)}
+.app-header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;padding-bottom:14px;border-bottom:1px solid var(--ocean-700);position:relative}
+.app-header__brand{display:flex;align-items:center;gap:12px}
+.app-header__mark{color:var(--teal-400);flex-shrink:0}
+.app-header__title{font-family:var(--font-display);font-size:22px;font-weight:700;margin:0;letter-spacing:-0.01em}
+.app-header__tagline{margin:2px 0 0;font-size:13px;color:var(--fog-300);max-width:42ch}
+.app-header__controls{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.app-header__updated{width:100%;margin:0;font-family:var(--font-mono);font-size:11px;color:var(--fog-500);text-align:right}
+.island-selector{display:flex;align-items:center;gap:8px;background:var(--ocean-800);border:1px solid var(--ocean-600);border-radius:10px;padding:8px 12px}
+.island-selector__label{font-size:12px;color:var(--fog-300)}
+.island-selector__select{background:transparent;color:var(--sand-050);border:none;font-family:var(--font-body);font-size:14px;font-weight:600;outline:none;max-width:240px}
+.island-selector__select:focus-visible{outline:2px solid var(--teal-400);outline-offset:2px;border-radius:4px}
+.island-selector__select option, .island-selector__select optgroup{background:var(--ocean-800);color:var(--sand-050)}
+.mode-badge{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;border:1px solid var(--ocean-600);font-size:13px;font-weight:600;color:var(--teal-300)}
+.mode-badge__dot{width:8px;height:8px;border-radius:50%;background:currentColor}
+.mode-badge--normal{color:var(--teal-300);border-color:#2c5e63}
+.mode-badge--watch{color:var(--amber-300);border-color:#6b5a3a}
+.mode-badge--warning{color:var(--amber-400);border-color:#6b4a2a}
+.mode-badge--emergency{color:var(--coral-400);border-color:#7a3a2a;animation:pulse-badge 2.4s ease-in-out infinite}
+@keyframes pulse-badge{0%,100%{box-shadow:0 0 0 0 rgba(232,97,60,.35)}50%{box-shadow:0 0 0 6px rgba(232,97,60,0)}}
+.emergency-banner{background:#3a2119;border:1px solid #7a3a2a;color:var(--sand-050);padding:12px 18px;border-radius:10px;font-size:14px;font-weight:500}
+.app__grid{display:grid;grid-template-columns:minmax(280px,380px) 1fr;gap:20px;align-items:start}
+@media (max-width:900px){.app__grid{grid-template-columns:1fr}}
+.app__column{display:flex;flex-direction:column;gap:20px}
+.panel{background:var(--ocean-800);border:1px solid var(--ocean-700);border-radius:16px;padding:20px 22px}
+.panel__header{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:14px}
+.panel__header h2{font-family:var(--font-display);font-size:16px;margin:0;font-weight:600}
+.panel__subtitle{font-size:12px;color:var(--fog-300);font-family:var(--font-mono)}
+.panel__status{font-size:13px;color:var(--fog-300);margin:0 0 12px}
+.panel__status--error{color:var(--amber-300)}
+.panel__status--warning{color:var(--amber-400);background:#2c220f;padding:8px 10px;border-radius:8px}
+.panel__footnote{margin:14px 0 0;font-size:11px;color:var(--fog-500)}
+.status-panel{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px}
+.status-ring{position:relative;width:160px;height:160px}
+.status-ring__svg{width:100%;height:100%;transform:rotate(-90deg)}
+.status-ring__track{fill:none;stroke:var(--ocean-700);stroke-width:10}
+.status-ring__value{fill:none;stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset 700ms ease,stroke 400ms ease}
+.status-ring__center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.status-ring__score{font-family:var(--font-display);font-size:36px;font-weight:700}
+.status-ring__unit{font-size:11px;color:var(--fog-300);text-transform:lowercase}
+.status-ring__badge{position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);background:var(--ocean-900);border:1px solid;border-radius:999px;padding:4px 12px;font-size:11px;font-weight:600;white-space:nowrap}
+.status-panel__note{font-size:13px;color:var(--fog-300);margin:12px 0 0;max-width:34ch}
+.weather-panel__headline{display:flex;align-items:baseline;gap:12px;margin-bottom:16px}
+.weather-panel__temp{font-family:var(--font-display);font-size:40px;font-weight:700}
+.weather-panel__condition{font-size:14px;color:var(--fog-300)}
+.weather-panel__grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px 16px;margin:0}
+.weather-panel__grid dt{font-size:11px;color:var(--fog-500);margin-bottom:2px}
+.weather-panel__grid dd{margin:0;font-family:var(--font-mono);font-size:14px;font-weight:600}
+.resource-card__stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.resource-card__stat-value{display:block;font-family:var(--font-mono);font-size:17px;font-weight:600;color:var(--teal-300)}
+.resource-card__stat-label{display:block;font-size:11px;color:var(--fog-300);margin-top:2px}
+.allocation-list{display:flex;flex-direction:column;gap:12px}
+.allocation-row__top{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px}
+.allocation-row__label{font-weight:500}
+.allocation-row__status{font-size:11px;font-weight:600;color:var(--fog-300)}
+.allocation-row--reduced .allocation-row__status{color:var(--amber-400)}
+.allocation-row--off .allocation-row__status,.allocation-row--paused .allocation-row__status{color:var(--coral-400)}
+.allocation-row--full .allocation-row__status{color:var(--teal-300)}
+.allocation-row__track{height:6px;border-radius:999px;background:var(--ocean-700);overflow:hidden}
+.allocation-row__fill{height:100%;border-radius:999px;background:var(--teal-400);transition:width 500ms ease}
+.allocation-row--reduced .allocation-row__fill{background:var(--amber-400)}
+.allocation-row--off .allocation-row__fill,.allocation-row--paused .allocation-row__fill{background:var(--coral-500)}
+.allocation-row__figures{margin-top:4px;font-family:var(--font-mono);font-size:11px;color:var(--fog-500)}
+.event-log__list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.event-log__item{display:flex;gap:12px;font-size:13px;padding-bottom:12px;border-bottom:1px solid var(--ocean-700)}
+.event-log__item:last-child{border-bottom:none;padding-bottom:0}
+.event-log__time{font-family:var(--font-mono);font-size:11px;color:var(--fog-500);flex-shrink:0;padding-top:1px}
+.event-log__text{color:var(--sand-100)}
+.app__footer{text-align:center}
+.app__footer p{margin:0;font-size:11px;color:var(--fog-500);max-width:70ch;margin-inline:auto}
 </style>
 </head>
-
-
 <body>
-
-<header>
-
-    <div>
-        <div class="logo">🌱 Eco Island</div>
-
-        <div class="subtitle">
-            Smart Island Resource & Emergency System
-        </div>
-    </div>
-
-    <div class="status" id="status">
-        🟢 NORMAL MODE
-    </div>
-
-</header>
-
-
-<div class="container">
-
-    <div class="hero">
-
-        <h1>🏝️ Eco Island</h1>
-
-        <p>
-            Live weather + island-specific emergency planning
-        </p>
-
-    </div>
-
-
-    <!-- ISLAND SELECTOR -->
-
-    <div class="card">
-
-        <h2>🌍 Choose an Island</h2>
-
-        <select id="islandSelect" onchange="chooseIsland()">
-
-            <option value="bali">🇮🇩 Bali</option>
-            <option value="maldives">🇲🇻 Maldives</option>
-            <option value="hawaii">🇺🇸 Hawaii</option>
-            <option value="iceland">🇮🇸 Iceland</option>
-            <option value="greenland">🇬🇱 Greenland</option>
-            <option value="madagascar">🇲🇬 Madagascar</option>
-            <option value="srilanka">🇱🇰 Sri Lanka</option>
-            <option value="jamaica">🇯🇲 Jamaica</option>
-            <option value="cuba">🇨🇺 Cuba</option>
-            <option value="cyprus">🇨🇾 Cyprus</option>
-            <option value="crete">🇬🇷 Crete</option>
-            <option value="sardinia">🇮🇹 Sardinia</option>
-            <option value="sicily">🇮🇹 Sicily</option>
-            <option value="corsica">🇫🇷 Corsica</option>
-            <option value="tasmania">🇦🇺 Tasmania</option>
-            <option value="northisland">🇳🇿 North Island</option>
-            <option value="southisland">🇳🇿 South Island</option>
-            <option value="borneo">🌏 Borneo</option>
-            <option value="java">🇮🇩 Java</option>
-            <option value="sumatra">🇮🇩 Sumatra</option>
-            <option value="luzon">🇵🇭 Luzon</option>
-            <option value="mindanao">🇵🇭 Mindanao</option>
-            <option value="okinawa">🇯🇵 Okinawa</option>
-            <option value="honshu">🇯🇵 Honshu</option>
-            <option value="taiwan">🇹🇼 Taiwan</option>
-            <option value="puertorico">🇵🇷 Puerto Rico</option>
-            <option value="bahamas">🇧🇸 Bahamas</option>
-            <option value="barbados">🇧🇧 Barbados</option>
-            <option value="fiji">🇫🇯 Fiji</option>
-            <option value="samoa">🇼🇸 Samoa</option>
-            <option value="tonga">🇹🇴 Tonga</option>
-            <option value="tahiti">🇵🇫 Tahiti</option>
-            <option value="guam">🇬🇺 Guam</option>
-            <option value="seychelles">🇸🇨 Seychelles</option>
-            <option value="mauritius">🇲🇺 Mauritius</option>
-            <option value="zanzibar">🇹🇿 Zanzibar</option>
-            <option value="mallorca">🇪🇸 Mallorca</option>
-            <option value="ibiza">🇪🇸 Ibiza</option>
-            <option value="canary">🇪🇸 Canary Islands</option>
-            <option value="azores">🇵🇹 Azores</option>
-            <option value="madeira">🇵🇹 Madeira</option>
-            <option value="vancouver">🇨🇦 Vancouver Island</option>
-            <option value="newfoundland">🇨🇦 Newfoundland</option>
-            <option value="longisland">🇺🇸 Long Island</option>
-
-        </select>
-
-    </div>
-
-
-    <!-- ISLAND DESCRIPTION -->
-
-    <div class="card">
-
-        <h2 id="islandName">🇮🇩 Bali</h2>
-
-        <p id="description"></p>
-
-        <div class="infoGrid">
-
-            <div class="info">
-                <div class="label">CLIMATE</div>
-                <div class="value" id="climate"></div>
-            </div>
-
-            <div class="info">
-                <div class="label">MAIN RESOURCE</div>
-                <div class="value" id="resource"></div>
-            </div>
-
-            <div class="info">
-                <div class="label">BIGGEST WEATHER / NATURAL RISK</div>
-                <div class="value" id="risk"></div>
-            </div>
-
-            <div class="info">
-                <div class="label">BEST RENEWABLE</div>
-                <div class="value" id="renewable"></div>
-            </div>
-
-            <div class="info">
-                <div class="label">COMMUNITY PRIORITY</div>
-                <div class="value" id="priority"></div>
-            </div>
-
-            <div class="info">
-                <div class="label">LOCATION</div>
-                <div class="value" id="location"></div>
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- LIVE WEATHER -->
-
-    <div class="card">
-
-        <h2>
-            🌦️ Live Weather
-            <span class="liveTag">LIVE DATA</span>
-        </h2>
-
-        <div class="weather" id="weatherIcon">
-            ⏳
-        </div>
-
-        <div class="weatherText" id="weatherDescription">
-            Loading weather...
-        </div>
-
-        <br>
-
-        <div class="infoGrid">
-
-            <div class="info">
-                <div class="label">TEMPERATURE</div>
-                <div class="value" id="temperature">--</div>
-            </div>
-
-            <div class="info">
-                <div class="label">WIND</div>
-                <div class="value" id="wind">--</div>
-            </div>
-
-            <div class="info">
-                <div class="label">PRECIPITATION</div>
-                <div class="value" id="rain">--</div>
-            </div>
-
-        </div>
-
-        <div class="alert" id="weatherAlert">
-            Connecting to live weather...
-        </div>
-
-    </div>
-
-
-    <!-- ECO DASHBOARD -->
-
-    <div class="card">
-
-        <h2>📊 Eco Island Dashboard</h2>
-
-        <div class="metrics">
-
-            <div class="metric">
-
-                <div class="metric-title">
-                    ☀️ Solar Potential
-                </div>
-
-                <div class="metric-value" id="solar">
-                    --
-                </div>
-
-                <div class="bar">
-                    <div class="fill" id="solarBar" style="width:0%"></div>
-                </div>
-
-            </div>
-
-
-            <div class="metric">
-
-                <div class="metric-title">
-                    🔋 Emergency Battery
-                </div>
-
-                <div class="metric-value" id="battery">
-                    --
-                </div>
-
-                <div class="bar">
-                    <div class="fill" id="batteryBar" style="width:0%"></div>
-                </div>
-
-            </div>
-
-
-            <div class="metric">
-
-                <div class="metric-title">
-                    💧 Water Security
-                </div>
-
-                <div class="metric-value" id="water">
-                    --
-                </div>
-
-                <div class="bar">
-                    <div class="fill" id="waterBar" style="width:0%"></div>
-                </div>
-
-            </div>
-
-
-            <div class="metric">
-
-                <div class="metric-title">
-                    ⚡ Energy Demand
-                </div>
-
-                <div class="metric-value" id="energy">
-                    --
-                </div>
-
-                <div class="bar">
-                    <div class="fill" id="energyBar" style="width:0%"></div>
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="alert" id="alert">
-            Weather analysis loading...
-        </div>
-
-    </div>
-
-
-    <!-- AI -->
-
-    <div class="card">
-
-        <h2>🤖 Eco Island AI</h2>
-
-        <p>
-            The AI combines the selected island's biggest hazard
-            with its current weather conditions.
-        </p>
-
-        <button class="ai" onclick="runAI()">
-            🤖 Run Eco Island AI
-        </button>
-
-        <div class="aiBox" id="aiBox" style="margin-top:15px;">
-
-            Choose an island and run the AI to determine
-            what the community should prioritize first.
-
-        </div>
-
-    </div>
-
-
-    <!-- EMERGENCY SIMULATION -->
-
-    <div class="card">
-
-        <h2>
-            🚨 Emergency Simulation
-            <span class="simTag">SIMULATION</span>
-        </h2>
-
-        <p>
-            This does NOT claim that an emergency is happening.
-            It creates a realistic practice scenario based on
-            the selected island's primary hazard.
-        </p>
-
-        <button class="emergency" onclick="startEmergency()">
-            🚨 Start Emergency Simulation
-        </button>
-
-        <button class="reset" onclick="resetEmergency()">
-            🔄 Reset
-        </button>
-
-    </div>
-
-
-    <!-- EMERGENCY OUTPUT -->
-
-    <div id="emergencySection" style="display:none;">
-
-        <div class="emergencyHeader">
-
-            <h2 id="emergencyTitle">
-                🚨 Emergency
-            </h2>
-
-            <p id="emergencyDescription"></p>
-
-            <p>
-                <b>Current live weather:</b>
-                <span id="emergencyWeather"></span>
-            </p>
-
-        </div>
-
-
-        <div class="card">
-
-            <h2>
-                🛡️ Precautions to Follow
-            </h2>
-
-            <div id="precautions"></div>
-
-        </div>
-
-
-        <div class="card">
-
-            <h2>
-                🎯 First Priority
-            </h2>
-
-            <div class="aiBox" id="firstPriority"></div>
-
-        </div>
-
-    </div>
-</div>
-
-
-<footer>
-    🌱 Eco Island — Building smarter,
-    safer island communities.
-</footer>
-
+<div id="root"></div>
 
 <script>
-
-
-/* =========================================================
-   ISLAND DATABASE
-========================================================= */
-
-const islands = {
-
-    bali: {
-        name: "🇮🇩 Bali",
-        description: "A tropical Indonesian island known for tourism, agriculture, forests and volcanic landscapes.",
-        climate: "Tropical",
-        resource: "Agriculture + Tourism",
-        risk: "🌋 Volcano Eruption",
-        renewable: "☀️ Solar",
-        priority: "🏥 Emergency services",
-        location: "Bali, Indonesia",
-        lat: -8.4095,
-        lon: 115.1889,
-        hazard: "volcano"
-    },
-
-    maldives: {
-        name: "🇲🇻 Maldives",
-        description: "A low-lying island nation highly exposed to coastal flooding, storms and sea-level hazards.",
-        climate: "Tropical",
-        resource: "Tourism + Marine life",
-        risk: "🌊 Coastal Flooding",
-        renewable: "☀️ Solar",
-        priority: "💧 Fresh water",
-        location: "Maldives",
-        lat: 3.2028,
-        lon: 73.2207,
-        hazard: "flood"
-    },
-
-    hawaii: {
-        name: "🇺🇸 Hawaii",
-        description: "A volcanic island chain with tropical ecosystems, tourism and renewable-energy potential.",
-        climate: "Tropical",
-        resource: "Tourism + Agriculture",
-        risk: "🌋 Volcano Eruption",
-        renewable: "☀️ Solar + Wind",
-        priority: "🏥 Emergency services",
-        location: "Hawaii, USA",
-        lat: 19.8968,
-        lon: -155.5828,
-        hazard: "volcano"
-    },
-
-    iceland: {
-        name: "🇮🇸 Iceland",
-        description: "A volcanic island with abundant geothermal energy and hydropower resources.",
-        climate: "Cold",
-        resource: "Geothermal Energy",
-        risk: "🌋 Volcanic Activity",
-        renewable: "♨️ Geothermal",
-        priority: "⚡ Energy",
-        location: "Iceland",
-        lat: 64.9631,
-        lon: -19.0208,
-        hazard: "volcano"
-    },
-
-    greenland: {
-        name: "🇬🇱 Greenland",
-        description: "An Arctic island exposed to extreme cold, snow and changing ice conditions.",
-        climate: "Arctic",
-        resource: "Fresh Water",
-        risk: "❄️ Extreme Cold",
-        renewable: "🌬️ Wind",
-        priority: "🔥 Heating",
-        location: "Greenland",
-        lat: 64.1814,
-        lon: -51.6941,
-        hazard: "cold"
-    },
-
-    madagascar: {
-        name: "🇲🇬 Madagascar",
-        description: "A biodiversity hotspot with forests, farms and large coastal communities.",
-        climate: "Tropical",
-        resource: "Agriculture",
-        risk: "🌀 Cyclone",
-        renewable: "☀️ Solar",
-        priority: "🌾 Food",
-        location: "Madagascar",
-        lat: -18.7669,
-        lon: 46.8691,
-        hazard: "cyclone"
-    },
-
-    srilanka: {
-        name: "🇱🇰 Sri Lanka",
-        description: "A tropical island with agriculture, forests and major coastal communities.",
-        climate: "Tropical",
-        resource: "Agriculture",
-        risk: "🌧️ Flooding",
-        renewable: "☀️ Solar",
-        priority: "💧 Water",
-        location: "Sri Lanka",
-        lat: 7.8731,
-        lon: 80.7718,
-        hazard: "flood"
-    },
-
-    jamaica: {
-        name: "🇯🇲 Jamaica",
-        description: "A Caribbean island with tropical forests, agriculture and coastal communities.",
-        climate: "Tropical",
-        resource: "Agriculture + Tourism",
-        risk: "🌀 Hurricane",
-        renewable: "☀️ Solar",
-        priority: "🏠 Shelters",
-        location: "Jamaica",
-        lat: 18.1096,
-        lon: -77.2975,
-        hazard: "hurricane"
-    },
-
-    cuba: {
-        name: "🇨🇺 Cuba",
-        description: "A large Caribbean island with agricultural regions and extensive coastlines.",
-        climate: "Tropical",
-        resource: "Agriculture",
-        risk: "🌀 Hurricane",
-        renewable: "☀️ Solar",
-        priority: "💧 Water",
-        location: "Cuba",
-        lat: 21.5218,
-        lon: -77.7812,
-        hazard: "hurricane"
-    },
-
-    cyprus: {
-        name: "🇨🇾 Cyprus",
-        description: "A Mediterranean island facing heat, drought and wildfire conditions.",
-        climate: "Mediterranean",
-        resource: "Agriculture",
-        risk: "🔥 Wildfire",
-        renewable: "☀️ Solar",
-        priority: "💧 Water",
-        location: "Cyprus",
-        lat: 35.1264,
-        lon: 33.4299,
-        hazard: "wildfire"
-    },
-
-    crete: {
-        name: "🇬🇷 Crete",
-        description: "A Mediterranean island with agriculture, tourism and strong solar potential.",
-        climate: "Mediterranean",
-        resource: "Agriculture + Tourism",
-        risk: "🔥 Wildfire",
-        renewable: "☀️ Solar",
-        priority: "💧 Water",
-        location: "Crete, Greece",
-        lat: 35.2401,
-        lon: 24.8093,
-        hazard: "wildfire"
-    },
-
-    sardinia: {
-        name: "🇮🇹 Sardinia",
-        description: "A Mediterranean island with agriculture, tourism and renewable-energy potential.",
-        climate: "Mediterranean",
-        resource: "Agriculture",
-        risk: "🔥 Wildfire",
-        renewable: "☀️ Solar + Wind",
-        priority: "💧 Water",
-        location: "Sardinia, Italy",
-        lat: 40.1209,
-        lon: 9.0129,
-        hazard: "wildfire"
-    },
-
-    sicily: {
-        name: "🇮🇹 Sicily",
-        description: "A large Mediterranean island with cities, farms and volcanic areas.",
-        climate: "Mediterranean",
-        resource: "Agriculture",
-        risk: "🌋 Volcano Eruption",
-        renewable: "☀️ Solar",
-        priority: "🏥 Emergency services",
-        location: "Sicily, Italy",
-        lat: 37.5999,
-        lon: 14.0154,
-        hazard: "volcano"
-    },
-
-    corsica: {
-        name: "🇫🇷 Corsica",
-        description: "A mountainous Mediterranean island with forests and coastal communities.",
-        climate: "Mediterranean",
-        resource: "Forests",
-        risk: "🔥 Wildfire",
-        renewable: "☀️ Solar",
-        priority: "🌲 Forest protection",
-        location: "Corsica, France",
-        lat: 42.0396,
-        lon: 9.0129,
-        hazard: "wildfire"
-    },
-
-    tasmania: {
-        name: "🇦🇺 Tasmania",
-        description: "A cool island with forests, farms, mountains and hydropower.",
-        climate: "Temperate",
-        resource: "Hydropower",
-        risk: "🔥 Bushfire",
-        renewable: "💧 Hydropower",
-        priority: "🌲 Forest protection",
-        location: "Tasmania, Australia",
-        lat: -41.4545,
-        lon: 145.9707,
-        hazard: "wildfire"
-    },
-
-    northisland: {
-        name: "🇳🇿 North Island",
-        description: "New Zealand's most populated island with volcanoes, farms and cities.",
-        climate: "Temperate",
-        resource: "Agriculture",
-        risk: "🌎 Earthquake",
-        renewable: "💧 Hydropower",
-        priority: "🏥 Hospitals",
-        location: "North Island, New Zealand",
-        lat: -38.5,
-        lon: 175.5,
-        hazard: "earthquake"
-    },
-
-    southisland: {
-        name: "🇳🇿 South Island",
-        description: "A mountainous island with glaciers, farms, forests and hydropower.",
-        climate: "Temperate",
-        resource: "Hydropower",
-        risk: "🌎 Earthquake",
-        renewable: "💧 Hydropower",
-        priority: "⚡ Energy",
-        location: "South Island, New Zealand",
-        lat: -43.5,
-        lon: 171.5,
-        hazard: "earthquake"
-    },
-
-    borneo: {
-        name: "🌏 Borneo",
-        description: "A massive tropical island containing rainforests, rivers and diverse wildlife.",
-        climate: "Tropical",
-        resource: "Rainforest + Water",
-        risk: "🌧️ Flooding",
-        renewable: "💧 Hydropower",
-        priority: "💧 Water",
-        location: "Borneo",
-        lat: 0.9619,
-        lon: 114.5548,
-        hazard: "flood"
-    },
-
-    java: {
-        name: "🇮🇩 Java",
-        description: "A densely populated island with cities, farms and volcanoes.",
-        climate: "Tropical",
-        resource: "Agriculture",
-        risk: "🌋 Volcano Eruption",
-        renewable: "☀️ Solar",
-        priority: "🏥 Hospitals",
-        location: "Java, Indonesia",
-        lat: -7.6145,
-        lon: 110.7122,
-        hazard: "volcano"
-    },
-
-    sumatra: {
-        name: "🇮🇩 Sumatra",
-        description: "A large tropical island with rainforests, farms and mountains.",
-        climate: "Tropical",
-        resource: "Agriculture + Forests",
-        risk: "🌎 Earthquake",
-        renewable: "💧 Hydropower",
-        priority: "🏠 Communities",
-        location: "Sumatra, Indonesia",
-        lat: -0.5897,
-        lon: 101.3431,
-        hazard: "earthquake"
-    },
-
-    luzon: {
-        name: "🇵🇭 Luzon",
-        description: "The Philippines' largest island with major cities, farms and volcanic zones.",
-        climate: "Tropical",
-        resource: "Agriculture",
-        risk: "🌀 Typhoon",
-        renewable: "☀️ Solar + Wind",
-        priority: "🏥 Hospitals",
-        location: "Luzon, Philippines",
-        lat: 16.5662,
-        lon: 121.2626,
-        hazard: "typhoon"
-    },
-
-    mindanao: {
-        name: "🇵🇭 Mindanao",
-        description: "A tropical island with agricultural regions, forests and coastal communities.",
-        climate: "Tropical",
-        resource: "Agriculture",
-        risk: "🌀 Tropical Storm",
-        renewable: "☀️ Solar",
-        priority: "🌾 Food",
-        location: "Mindanao, Philippines",
-        lat: 7.1907,
-        lon: 125.4553,
-        hazard: "typhoon"
-    },
-
-    okinawa: {
-        name: "🇯🇵 Okinawa",
-        description: "A subtropical Japanese island chain exposed to typhoons and coastal hazards.",
-        climate: "Subtropical",
-        resource: "Marine Ecosystems",
-        risk: "🌀 Typhoon",
-        renewable: "☀️ Solar",
-        priority: "🏥 Hospitals",
-        location: "Okinawa, Japan",
-        lat: 26.2124,
-        lon: 127.6809,
-        hazard: "typhoon"
-    },
-
-    honshu: {
-        name: "🇯🇵 Honshu",
-        description: "Japan's largest island containing major cities and mountains.",
-        climate: "Temperate",
-        resource: "Technology + Industry",
-        risk: "🌎 Earthquake",
-        renewable: "☀️ Solar + Hydropower",
-        priority: "🏥 Hospitals",
-        location: "Honshu, Japan",
-        lat: 36.2048,
-        lon: 138.2529,
-        hazard: "earthquake"
-    },
-
-    taiwan: {
-        name: "🇹🇼 Taiwan",
-        description: "A mountainous island with dense cities, technology and farms.",
-        climate: "Subtropical",
-        resource: "Technology",
-        risk: "🌎 Earthquake",
-        renewable: "☀️ Solar + Wind",
-        priority: "⚡ Power",
-        location: "Taiwan",
-        lat: 23.6978,
-        lon: 120.9605,
-        hazard: "earthquake"
-    },
-
-    puertorico: {
-        name: "🇵🇷 Puerto Rico",
-        description: "A Caribbean island with tropical forests, mountains and coastal communities.",
-        climate: "Tropical",
-        resource: "Tourism + Agriculture",
-        risk: "🌀 Hurricane",
-        renewable: "☀️ Solar",
-        priority: "⚡ Power",
-        location: "Puerto Rico",
-        lat: 18.2208,
-        lon: -66.5901,
-        hazard: "hurricane"
-    },
-
-    bahamas: {
-        name: "🇧🇸 Bahamas",
-        description: "A low-lying Caribbean island nation with extensive coastlines.",
-        climate: "Tropical",
-        resource: "Tourism + Marine Life",
-        risk: "🌀 Hurricane",
-        renewable: "☀️ Solar",
-        priority: "🌊 Coastal protection",
-        location: "Bahamas",
-        lat: 25.0343,
-        lon: -77.3963,
-        hazard: "hurricane"
-    },
-
-    barbados: {
-        name: "🇧🇧 Barbados",
-        description: "A Caribbean island with tourism, agriculture and coastal communities.",
-        climate: "Tropical",
-        resource: "Tourism",
-        risk: "🌀 Hurricane",
-        renewable: "☀️ Solar",
-        priority: "💧 Water",
-        location: "Barbados",
-        lat: 13.1939,
-        lon: -59.5432,
-        hazard: "hurricane"
-    },
-
-    fiji: {
-        name: "🇫🇯 Fiji",
-        description: "A Pacific island nation with forests, reefs, farms and coastal communities.",
-        climate: "Tropical",
-        resource: "Marine Ecosystems",
-        risk: "🌀 Cyclone",
-        renewable: "💧 Hydropower",
-        priority: "🌊 Coastal protection",
-        location: "Fiji",
-        lat: -17.7134,
-        lon: 178.0650,
-        hazard: "cyclone"
-    },
-
-    samoa: {
-        name: "🇼🇸 Samoa",
-        description: "A Pacific island nation with volcanic landscapes, forests and reefs.",
-        climate: "Tropical",
-        resource: "Agriculture",
-        risk: "🌊 Coastal Flooding",
-        renewable: "☀️ Solar",
-        priority: "💧 Water",
-        location: "Samoa",
-        lat: -13.7590,
-        lon: -172.1046,
-        hazard: "flood"
-    },
-
-    tonga: {
-        name: "🇹🇴 Tonga",
-        description: "A Pacific island kingdom made up of many low-lying islands.",
-        climate: "Tropical",
-        resource: "Marine Ecosystems",
-        risk: "🌊 Tsunami",
-        renewable: "☀️ Solar",
-        priority: "🏠 Evacuation",
-        location: "Tonga",
-        lat: -21.1789,
-        lon: -175.1982,
-        hazard: "tsunami"
-    },
-
-    tahiti: {
-        name: "🇵🇫 Tahiti",
-        description: "A volcanic Polynesian island with mountains, reefs and tourism.",
-        climate: "Tropical",
-        resource: "Tourism + Marine Life",
-        risk: "🌊 Coastal Flooding",
-        renewable: "☀️ Solar",
-        priority: "🌊 Coastal protection",
-        location: "Tahiti",
-        lat: -17.6509,
-        lon: -149.4260,
-        hazard: "flood"
-    },
-
-    guam: {
-        name: "🇬🇺 Guam",
-        description: "A tropical Pacific island exposed to typhoons and coastal hazards.",
-        climate: "Tropical",
-        resource: "Tourism",
-        risk: "🌀 Typhoon",
-        renewable: "☀️ Solar",
-        priority: "🏥 Emergency services",
-        location: "Guam",
-        lat: 13.4443,
-        lon: 144.7937,
-        hazard: "typhoon"
-    },
-
-    seychelles: {
-        name: "🇸🇨 Seychelles",
-        description: "An Indian Ocean island nation known for forests, reefs and biodiversity.",
-        climate: "Tropical",
-        resource: "Marine Ecosystems",
-        risk: "🌊 Coastal Flooding",
-        renewable: "☀️ Solar",
-        priority: "🌊 Coastlines",
-        location: "Seychelles",
-        lat: -4.6796,
-        lon: 55.4920,
-        hazard: "flood"
-    },
-
-    mauritius: {
-        name: "🇲🇺 Mauritius",
-        description: "A volcanic Indian Ocean island with tourism, agriculture and reefs.",
-        climate: "Tropical",
-        resource: "Tourism + Agriculture",
-        risk: "🌀 Cyclone",
-        renewable: "☀️ Solar",
-        priority: "💧 Water",
-        location: "Mauritius",
-        lat: -20.3484,
-        lon: 57.5522,
-        hazard: "cyclone"
-    },
-
-    zanzibar: {
-        name: "🇹🇿 Zanzibar",
-        description: "A tropical East African island with agriculture, fishing and tourism.",
-        climate: "Tropical",
-        resource: "Agriculture + Fisheries",
-        risk: "🌊 Coastal Flooding",
-        renewable: "☀️ Solar",
-        priority: "💧 Water",
-        location: "Zanzibar, Tanzania",
-        lat: -6.1659,
-        lon: 39.2026,
-        hazard: "flood"
-    },
-
-    mallorca: {
-        name: "🇪🇸 Mallorca",
-        description: "A Mediterranean island with tourism, agriculture and coastal cities.",
-        climate: "Mediterranean",
-        resource: "Tourism",
-        risk: "🔥 Wildfire",
-        renewable: "☀️ Solar",
-        priority: "💧 Water",
-        location: "Mallorca, Spain",
-        lat: 39.6953,
-        lon: 3.0176,
-        hazard: "wildfire"
-    },
-
-    ibiza: {
-        name: "🇪🇸 Ibiza",
-        description: "A Mediterranean island with tourism, forests and limited freshwater.",
-        climate: "Mediterranean",
-        resource: "Tourism",
-        risk: "🔥 Wildfire",
-        renewable: "☀️ Solar",
-        priority: "💧 Water",
-        location: "Ibiza, Spain",
-        lat: 39.0200,
-        lon: 1.4821,
-        hazard: "wildfire"
-    },
-
-    canary: {
-        name: "🇪🇸 Canary Islands",
-        description: "A volcanic Atlantic island group with strong solar and wind potential.",
-        climate: "Subtropical",
-        resource: "Tourism + Agriculture",
-        risk: "🌋 Volcano Eruption",
-        renewable: "☀️ Solar + Wind",
-        priority: "💧 Water",
-        location: "Canary Islands, Spain",
-        lat: 28.2916,
-        lon: -16.6291,
-        hazard: "volcano"
-    },
-
-    azores: {
-        name: "🇵🇹 Azores",
-        description: "A volcanic Atlantic island group with farms and geothermal potential.",
-        climate: "Oceanic",
-        resource: "Geothermal Energy",
-        risk: "🌋 Volcanic Activity",
-        renewable: "♨️ Geothermal",
-        priority: "⚡ Energy",
-        location: "Azores, Portugal",
-        lat: 37.7412,
-        lon: -25.6756,
-        hazard: "volcano"
-    },
-
-    madeira: {
-        name: "🇵🇹 Madeira",
-        description: "A mountainous Atlantic island with forests, agriculture and tourism.",
-        climate: "Subtropical",
-        resource: "Hydropower",
-        risk: "🌧️ Landslide",
-        renewable: "💧 Hydropower",
-        priority: "🛣️ Roads",
-        location: "Madeira, Portugal",
-        lat: 32.7607,
-        lon: -16.9595,
-        hazard: "landslide"
-    },
-
-    vancouver: {
-        name: "🇨🇦 Vancouver Island",
-        description: "A large Pacific island with forests, mountains and coastal communities.",
-        climate: "Temperate",
-        resource: "Forests",
-        risk: "🔥 Wildfire",
-        renewable: "💧 Hydropower",
-        priority: "🌲 Forests",
-        location: "Vancouver Island, Canada",
-        lat: 49.6500,
-        lon: -125.4490,
-        hazard: "wildfire"
-    },
-
-    newfoundland: {
-        name: "🇨🇦 Newfoundland",
-        description: "A North Atlantic island with fishing communities, forests and rugged coastlines.",
-        climate: "Cold",
-        resource: "Fisheries",
-        risk: "🌨️ Severe Storm",
-        renewable: "🌬️ Wind",
-        priority: "🔥 Heating",
-        location: "Newfoundland, Canada",
-        lat: 48.1667,
-        lon: -55.5000,
-        hazard: "storm"
-    },
-
-    longisland: {
-        name: "🇺🇸 Long Island",
-        description: "A densely populated Atlantic island with major coastal communities.",
-        climate: "Temperate",
-        resource: "Technology + Services",
-        risk: "🌀 Hurricane",
-        renewable: "☀️ Solar + Wind",
-        priority: "🏥 Hospitals",
-        location: "Long Island, USA",
-        lat: 40.7891,
-        lon: -73.1350,
-        hazard: "hurricane"
-    }
-};
-
-
-/* =========================================================
-   EMERGENCY DATABASE
-========================================================= */
-
-const emergencies = {
-
-    volcano: {
-        title: "🌋 VOLCANO ERUPTION SIMULATION",
-        description:
-            "The island is practicing its response to a simulated volcanic eruption. Follow official emergency instructions in a real event.",
-        precautions: [
-
-            ["🚨 Follow evacuation orders",
-             "Leave areas when officials order an evacuation because hazard zones can become dangerous quickly."],
-
-            ["🗺️ Know evacuation routes",
-             "Knowing the route ahead of time reduces confusion and delays during an emergency."],
-
-            ["🏔️ Stay away from valleys and low areas",
-             "Lahars can move through valleys, so low-lying areas can become dangerous."],
-
-            ["📻 Monitor official alerts",
-             "Officials can update hazard zones and instructions as conditions change."],
-
-            ["🏠 Shelter from ash when instructed",
-             "Staying indoors reduces exposure to airborne volcanic ash."],
-
-            ["🚗 Avoid unnecessary driving in heavy ash",
-             "Ash can reduce visibility and interfere with vehicles and roads."],
-
-            ["🐕 Bring pets indoors when possible",
-             "This reduces their exposure to ash and other volcanic hazards."],
-
-            ["🎒 Keep an emergency kit ready",
-             "Supplies help people manage if evacuation or sheltering lasts longer than expected."]
-        ]
-    },
-
-
-    hurricane: {
-        title: "🌀 HURRICANE SIMULATION",
-        description:
-            "The island is practicing its response to a simulated hurricane approaching the community.",
-        precautions: [
-
-            ["🚨 Follow evacuation orders",
-             "Leaving when officials instruct you to helps keep people away from dangerous flooding and winds."],
-
-            ["🏠 Move to a safe shelter",
-             "Strong winds and flying debris can damage buildings and make exposed areas unsafe."],
-
-            ["🌊 Stay away from flooded areas",
-             "Floodwater can hide dangerous conditions and may move vehicles or debris."],
-
-            ["📻 Monitor official alerts",
-             "Storm tracks and evacuation instructions can change as the storm develops."],
-
-            ["🔋 Protect backup power",
-             "Keeping backup power available helps emergency communication and essential services."],
-
-            ["💧 Store safe drinking water",
-             "Water systems can be disrupted or contaminated during severe storms."],
-
-            ["📱 Keep communication devices charged",
-             "A charged phone can help people receive emergency updates and contact responders."]
-        ]
-    },
-
-
-    cyclone: {
-        title: "🌀 CYCLONE SIMULATION",
-        description:
-            "The island is practicing its response to a simulated tropical cyclone.",
-        precautions: [
-
-            ["🚨 Follow official evacuation instructions",
-             "Authorities use hazard information to direct people away from the most dangerous areas."],
-
-            ["🏠 Shelter in a strong building",
-             "A sturdy shelter provides protection from strong winds and flying debris."],
-
-            ["🌊 Avoid coastal and flooded areas",
-             "Storm surge and flooding can make coastal areas dangerous."],
-
-            ["📻 Monitor emergency updates",
-             "Conditions can change quickly and officials may issue new instructions."],
-
-            ["💧 Protect drinking water",
-             "Storm damage can interrupt or contaminate local water supplies."],
-
-            ["🔋 Save emergency power",
-             "Backup electricity can keep critical communication and services operating."]
-        ]
-    },
-
-
-    typhoon: {
-        title: "🌀 TYPHOON SIMULATION",
-        description:
-            "The island is practicing its response to a simulated typhoon.",
-        precautions: [
-
-            ["🚨 Follow evacuation instructions",
-             "Official evacuation orders move people away from the highest-risk areas."],
-
-            ["🏠 Shelter indoors",
-             "Indoor shelter reduces exposure to dangerous winds and debris."],
-
-            ["🌊 Stay away from floodwater",
-             "Floodwater can contain hidden hazards and strong currents."],
-
-            ["📱 Monitor official alerts",
-             "Weather and emergency conditions can change rapidly."],
-
-            ["🔋 Protect emergency electricity",
-             "Backup power supports communications and critical services."],
-
-            ["💧 Keep clean water available",
-             "Storm damage may temporarily interrupt water service."]
-        ]
-    },
-
-
-    flood: {
-        title: "🌊 FLOODING SIMULATION",
-        description:
-            "The island is practicing its response to a simulated major flooding event.",
-        precautions: [
-
-            ["🚨 Move to higher ground when instructed",
-             "Higher ground reduces exposure to rising water."],
-
-            ["🚫 Never walk or drive through dangerous floodwater",
-             "Floodwater can be deeper, faster and more hazardous than it appears."],
-
-            ["📻 Monitor official warnings",
-             "Flood conditions can change quickly as rainfall and water levels change."],
-
-            ["💧 Protect drinking water",
-             "Floodwater can contaminate water systems."],
-
-            ["🔋 Protect emergency power",
-             "Keeping power available supports communications and emergency services."],
-
-            ["🎒 Keep emergency supplies ready",
-             "Supplies are useful if roads become blocked or services are disrupted."]
-        ]
-    },
-
-
-    wildfire: {
-        title: "🔥 WILDFIRE SIMULATION",
-        description:
-            "The island is practicing its response to a simulated wildfire spreading toward communities.",
-        precautions: [
-
-            ["🚨 Evacuate when officials order it",
-             "Leaving early helps people avoid rapidly changing fire conditions."],
-
-            ["🌲 Stay away from active fire zones",
-             "Fire can spread unpredictably through vegetation and wind."],
-
-            ["📻 Monitor emergency alerts",
-             "Officials can change evacuation zones as the fire moves."],
-
-            ["🏠 Keep doors and windows closed when smoke is heavy",
-             "Reducing outdoor air entering a building can lower smoke exposure."],
-
-            ["🚗 Keep evacuation routes clear",
-             "Clear roads allow residents and emergency responders to move safely."],
-
-            ["🐕 Bring pets with you",
-             "Pets can also be affected by smoke and rapidly changing fire conditions."]
-        ]
-    },
-
-
-    earthquake: {
-        title: "🌎 EARTHQUAKE SIMULATION",
-        description:
-            "The island is practicing its response to a simulated major earthquake.",
-        precautions: [
-
-            ["⬇️ Drop, cover and hold on",
-             "This helps protect people from falling objects and debris."],
-
-            ["🚪 Stay away from damaged buildings",
-             "Structures can remain unstable after the shaking stops."],
-
-            ["📻 Monitor official instructions",
-             "Authorities may provide information about damaged areas and hazards."],
-
-            ["🔥 Watch for secondary hazards",
-             "Earthquakes can damage utilities and infrastructure."],
-
-            ["🚨 Be prepared for aftershocks",
-             "Additional shaking can happen after the main earthquake."],
-
-            ["💧 Protect drinking water",
-             "Infrastructure damage can interrupt or contaminate water supplies."]
-        ]
-    },
-
-
-    tsunami: {
-        title: "🌊 TSUNAMI SIMULATION",
-        description:
-            "The island is practicing its response to a simulated tsunami threat.",
-        precautions: [
-
-            ["🚨 Move inland or to higher ground when instructed",
-             "Higher ground reduces exposure to tsunami waves."],
-
-            ["🌊 Stay away from the shoreline",
-             "Tsunami waves can arrive in multiple surges."],
-
-            ["📻 Follow official tsunami alerts",
-             "Authorities use monitoring systems to provide evacuation information."],
-
-            ["🗺️ Know the evacuation route",
-             "Knowing where to go saves valuable time during an emergency."],
-
-            ["⏳ Do not return until officials say it is safe",
-             "Later waves and dangerous currents may continue after the first wave."]
-        ]
-    },
-
-
-    cold: {
-        title: "❄️ EXTREME COLD SIMULATION",
-        description:
-            "The island is practicing its response to a simulated extreme-cold event.",
-        precautions: [
-
-            ["🏠 Stay in a warm shelter",
-             "Shelter reduces exposure to dangerous cold conditions."],
-
-            ["🔥 Protect heating systems",
-             "Reliable heating helps prevent dangerous indoor temperatures."],
-
-            ["📻 Monitor weather alerts",
-             "Temperatures and conditions can change quickly."],
-
-            ["💧 Protect water systems",
-             "Extreme cold can damage or freeze water infrastructure."],
-
-            ["🔋 Save backup power",
-             "Backup electricity can keep heating and communications available."]
-        ]
-    },
-
-
-    landslide: {
-        title: "⛰️ LANDSLIDE SIMULATION",
-        description:
-            "The island is practicing its response to a simulated landslide threat after heavy rainfall.",
-        precautions: [
-
-            ["🚨 Leave threatened areas when instructed",
-             "Landslides can happen quickly with little warning."],
-
-            ["⛰️ Stay away from unstable slopes",
-             "Additional soil or rock movement can occur after the first slide."],
-
-            ["🌧️ Monitor rainfall warnings",
-             "Heavy rainfall can increase the likelihood of slope failure."],
-
-            ["🛣️ Avoid blocked or damaged roads",
-             "Roads near landslides may be unstable or unsafe."],
-
-            ["📻 Follow official updates",
-             "Authorities can identify newly threatened areas."]
-        ]
-    },
-
-
-    storm: {
-        title: "🌨️ SEVERE STORM SIMULATION",
-        description:
-            "The island is practicing its response to a simulated severe storm.",
-        precautions: [
-
-            ["🏠 Shelter indoors",
-             "Indoor shelter reduces exposure to strong winds, lightning and debris."],
-
-            ["📻 Monitor weather alerts",
-             "Storm conditions can change quickly."],
-
-            ["🔋 Charge communication devices",
-             "Charged devices help people receive emergency information."],
-
-            ["🌊 Avoid flooded areas",
-             "Floodwater can hide dangerous conditions."],
-
-            ["🚗 Avoid unnecessary travel",
-             "Severe weather can make roads hazardous."]
-        ]
-    }
-
-};
-
-
-/* =========================================================
-   WEATHER VARIABLES
-========================================================= */
-
-let currentWeather = null;
-
-
-/* =========================================================
-   GET LIVE WEATHER
-========================================================= */
-
-async function getWeather(data) {
-    const weatherIcon = document.getElementById("weatherIcon");
-    const weatherDescription = document.getElementById("weatherDescription");
-    const weatherAlert = document.getElementById("weatherAlert");
-
-    weatherIcon.innerHTML = "⏳";
-    weatherDescription.innerHTML = "Loading live weather...";
-    weatherAlert.innerHTML = "Connecting to Open-Meteo live weather data...";
-
-    try {
-        /* Open-Meteo provides current conditions for the selected
-           island's latitude and longitude. */
-        const url = new URL("https://api.open-meteo.com/v1/forecast");
-
-        url.searchParams.set("latitude", data.lat);
-        url.searchParams.set("longitude", data.lon);
-        url.searchParams.set(
-            "current",
-            "temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,wind_gusts_10m"
-        );
-        url.searchParams.set("temperature_unit", "fahrenheit");
-        url.searchParams.set("wind_speed_unit", "mph");
-        url.searchParams.set("precipitation_unit", "mm");
-        url.searchParams.set("timezone", "auto");
-        url.searchParams.set("forecast_days", "1");
-
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), 10000);
-
-        const response = await fetch(url.toString(), {
-            method: "GET",
-            cache: "no-store",
-            signal: controller.signal
-        });
-
-        clearTimeout(timeout);
-
-        if (!response.ok) {
-            throw new Error("Weather service returned HTTP " + response.status);
-        }
-
-        const weather = await response.json();
-
-        if (!weather.current) {
-            throw new Error("No current weather data was returned.");
-        }
-
-        currentWeather = weather.current;
-        updateWeather(weather.current);
-
-        const updatedTime = weather.current.time
-            ? new Date(weather.current.time).toLocaleString([], {
-                dateStyle: "short",
-                timeStyle: "short"
-            })
-            : "just now";
-
-        weatherAlert.innerHTML +=
-            "<br><small>Updated: " + updatedTime + " • Source: Open-Meteo</small>";
-
-    } catch (error) {
-        console.error("Weather error:", error);
-        currentWeather = null;
-
-        weatherIcon.innerHTML = "⚠️";
-        weatherDescription.innerHTML = "Live weather could not be loaded.";
-        weatherAlert.innerHTML =
-            "🔴 <b>Live weather connection failed.</b><br>" +
-            "Check your internet connection, then refresh the page.<br>" +
-            "<small>Open-Meteo error: " + error.message + "</small>";
-    }
+/* ============================== DATA ============================== */
+const ISLAND_GROUPS = [
+  { region: 'Pacific Islands', islands: [
+    { id:'fiji', name:'Fiji (Suva)', lat:-18.1416, lon:178.4419 },
+    { id:'vanuatu', name:'Vanuatu (Port Vila)', lat:-17.7333, lon:168.3273 },
+    { id:'solomon', name:'Solomon Islands (Honiara)', lat:-9.4456, lon:159.9729 },
+    { id:'samoa', name:'Samoa (Apia)', lat:-13.8333, lon:-171.7667 },
+    { id:'tonga', name:'Tonga (Nuku\u02bbalofa)', lat:-21.1789, lon:-175.1982 },
+    { id:'hawaii', name:'Hawai\u02bbi (Honolulu)', lat:21.3069, lon:-157.8583 },
+    { id:'kiribati', name:'Kiribati (Tarawa)', lat:1.3291, lon:172.9791 },
+  ]},
+  { region: 'Indian Ocean Islands', islands: [
+    { id:'maldives', name:'Maldives (Mal\u00e9)', lat:4.1755, lon:73.5093 },
+    { id:'seychelles', name:'Seychelles (Victoria)', lat:-4.6191, lon:55.4513 },
+    { id:'comoros', name:'Comoros (Moroni)', lat:-11.7042, lon:43.2402 },
+    { id:'srilanka', name:'Sri Lanka (Colombo)', lat:6.9271, lon:79.8612 },
+    { id:'madagascar', name:'Madagascar (Antananarivo)', lat:-18.8792, lon:47.5079 },
+  ]},
+  { region: 'Caribbean Islands', islands: [
+    { id:'bahamas', name:'Bahamas (Nassau)', lat:25.0480, lon:-77.3554 },
+    { id:'barbados', name:'Barbados (Bridgetown)', lat:13.1132, lon:-59.5988 },
+    { id:'puertorico', name:'Puerto Rico (San Juan)', lat:18.4655, lon:-66.1057 },
+    { id:'jamaica', name:'Jamaica (Kingston)', lat:17.9712, lon:-76.7936 },
+    { id:'dominica', name:'Dominica (Roseau)', lat:15.3092, lon:-61.3794 },
+  ]},
+  { region: 'Atlantic Islands', islands: [
+    { id:'azores', name:'Azores (Ponta Delgada)', lat:37.7412, lon:-25.6756 },
+    { id:'canary', name:'Canary Islands (Las Palmas)', lat:28.1235, lon:-15.4363 },
+    { id:'capeverde', name:'Cape Verde (Praia)', lat:14.9330, lon:-23.5133 },
+  ]},
+];
+
+function findIsland(id){
+  for(const g of ISLAND_GROUPS){ const m = g.islands.find(i=>i.id===id); if(m) return m; }
+  return null;
 }
 
+/* ============================== WEATHER ============================== */
+const WMO_CODES = {0:'Clear sky',1:'Mostly clear',2:'Partly cloudy',3:'Overcast',45:'Fog',48:'Depositing rime fog',
+  51:'Light drizzle',53:'Moderate drizzle',55:'Dense drizzle',56:'Light freezing drizzle',57:'Dense freezing drizzle',
+  61:'Slight rain',63:'Moderate rain',65:'Heavy rain',66:'Light freezing rain',67:'Heavy freezing rain',
+  71:'Slight snow',73:'Moderate snow',75:'Heavy snow',77:'Snow grains',80:'Slight rain showers',81:'Moderate rain showers',
+  82:'Violent rain showers',85:'Slight snow showers',86:'Heavy snow showers',95:'Thunderstorm',
+  96:'Thunderstorm with slight hail',99:'Thunderstorm with heavy hail'};
 
-/* =========================================================
-   UPDATE WEATHER DISPLAY
-========================================================= */
+function describeWeatherCode(code){ return WMO_CODES[code] || 'Unknown conditions'; }
 
-function updateWeather(weather) {
-
-    const temperature = Number(weather.temperature_2m);
-    const wind = Number(weather.wind_speed_10m);
-    const gusts = Number(weather.wind_gusts_10m || 0);
-    const precipitation = Number(weather.precipitation || 0);
-    const code = Number(weather.weather_code);
-
-    document.getElementById("temperature").innerHTML =
-        Math.round(temperature) + "°F";
-
-    document.getElementById("wind").innerHTML =
-        Math.round(wind) + " mph";
-
-    document.getElementById("rain").innerHTML =
-        precipitation.toFixed(1) + " mm";
-
-    /* WMO weather-code descriptions */
-    let description = "Current conditions";
-    let icon = "🌤️";
-
-    if (code === 0) {
-        description = "Clear sky";
-        icon = "☀️";
-    } else if (code === 1) {
-        description = "Mainly clear";
-        icon = "🌤️";
-    } else if (code === 2) {
-        description = "Partly cloudy";
-        icon = "⛅";
-    } else if (code === 3) {
-        description = "Overcast";
-        icon = "☁️";
-    } else if ([45, 48].includes(code)) {
-        description = "Foggy";
-        icon = "🌫️";
-    } else if ([51, 53, 55].includes(code)) {
-        description = "Drizzle";
-        icon = "🌦️";
-    } else if ([56, 57].includes(code)) {
-        description = "Freezing drizzle";
-        icon = "🌧️";
-    } else if ([61, 63, 65].includes(code)) {
-        description = "Rain";
-        icon = "🌧️";
-    } else if ([66, 67].includes(code)) {
-        description = "Freezing rain";
-        icon = "🌧️";
-    } else if ([71, 73, 75, 77].includes(code)) {
-        description = "Snow";
-        icon = "❄️";
-    } else if ([80, 81, 82].includes(code)) {
-        description = "Rain showers";
-        icon = "🌦️";
-    } else if ([85, 86].includes(code)) {
-        description = "Snow showers";
-        icon = "🌨️";
-    } else if (code === 95) {
-        description = "Thunderstorm";
-        icon = "⛈️";
-    } else if ([96, 99].includes(code)) {
-        description = "Thunderstorm with hail";
-        icon = "⛈️";
-    }
-
-    document.getElementById("weatherIcon").innerHTML = icon;
-    document.getElementById("weatherDescription").innerHTML =
-        description + " • " + Math.round(temperature) + "°F";
-
-    /* Analyze current conditions for the dashboard */
-    let solar = 70;
-    let battery = 85;
-    let water = 85;
-    let energy = 45;
-
-    if ([0, 1].includes(code)) {
-        solar += 20;
-    } else if ([2, 3].includes(code)) {
-        solar += 5;
-    } else if (precipitation > 0) {
-        solar -= 10;
-    }
-
-    if (precipitation >= 10) {
-        water += 5;
-        energy += 10;
-    }
-
-    if (temperature >= 95) {
-        water -= 15;
-        energy += 20;
-    } else if (temperature <= 40) {
-        energy += 15;
-    }
-
-    if (wind >= 35 || gusts >= 50) {
-        battery -= 10;
-        energy += 15;
-    }
-
-    if (code >= 95) {
-        solar -= 15;
-        battery -= 5;
-    }
-
-    solar = Math.max(0, Math.min(100, Math.round(solar)));
-    battery = Math.max(0, Math.min(100, Math.round(battery)));
-    water = Math.max(0, Math.min(100, Math.round(water)));
-    energy = Math.max(0, Math.min(100, Math.round(energy)));
-
-    document.getElementById("solar").innerHTML = solar + "%";
-    document.getElementById("battery").innerHTML = battery + "%";
-    document.getElementById("water").innerHTML = water + "%";
-    document.getElementById("energy").innerHTML = energy + "%";
-
-    document.getElementById("solarBar").style.width = solar + "%";
-    document.getElementById("batteryBar").style.width = battery + "%";
-    document.getElementById("waterBar").style.width = water + "%";
-    document.getElementById("energyBar").style.width = energy + "%";
-
-    let alertText = "🟢 Current conditions are relatively stable.";
-
-    if (wind >= 35 || gusts >= 50) {
-        alertText = "🟠 Strong wind conditions detected — monitor official weather alerts.";
-    } else if (precipitation >= 10) {
-        alertText = "🟠 Heavy precipitation detected — monitor flooding and drainage conditions.";
-    } else if (temperature >= 95) {
-        alertText = "🟠 High temperature detected — monitor heat and water demand.";
-    } else if (code >= 95) {
-        alertText = "🟠 Thunderstorm conditions detected — monitor official warnings.";
-    }
-
-    document.getElementById("alert").innerHTML = alertText;
-
-    /* Keep the AI and emergency simulation synced with the latest data. */
-    return {
-        temperature,
-        wind,
-        gusts,
-        precipitation,
-        code
-    };
+async function fetchIslandWeather(lat, lon){
+  const params = new URLSearchParams({
+    latitude: lat, longitude: lon,
+    current: ['temperature_2m','relative_humidity_2m','precipitation','weather_code','surface_pressure','wind_speed_10m','wind_gusts_10m'].join(','),
+    timezone: 'auto', wind_speed_unit: 'kmh',
+  });
+  const res = await fetch(`https://api.open-meteo.com/v1/forecast?${params.toString()}`);
+  if(!res.ok) throw new Error(`Weather service responded with ${res.status}`);
+  const data = await res.json();
+  const c = data.current;
+  return {
+    temperatureC: c.temperature_2m, humidity: c.relative_humidity_2m, precipitationMm: c.precipitation,
+    weatherCode: c.weather_code, conditionText: describeWeatherCode(c.weather_code),
+    pressureHpa: c.surface_pressure, windSpeedKmh: c.wind_speed_10m, windGustsKmh: c.wind_gusts_10m,
+    observedAt: c.time,
+  };
 }
 
+function classifyConditions(weather){
+  if(!weather) return { level:'unknown', reasons:[] };
+  const reasons = [];
+  let level = 'normal';
+  const stormCodes = new Set([95,96,99]);
+  const heavyRainCodes = new Set([65,67,82]);
 
-/* =========================================================
-   CHANGE ISLAND
-========================================================= */
+  if(weather.windGustsKmh>=90 || weather.windSpeedKmh>=75 || stormCodes.has(weather.weatherCode)){
+    level='emergency';
+    reasons.push(stormCodes.has(weather.weatherCode)
+      ? `Active thunderstorm detected (${weather.conditionText.toLowerCase()})`
+      : `Sustained winds of ${Math.round(weather.windSpeedKmh)} km/h with gusts to ${Math.round(weather.windGustsKmh)} km/h`);
+  } else if(weather.windGustsKmh>=60 || weather.windSpeedKmh>=45 || heavyRainCodes.has(weather.weatherCode) || weather.precipitationMm>=15){
+    level='warning';
+    reasons.push(`Elevated wind and rainfall (${weather.conditionText.toLowerCase()})`);
+  } else if(weather.windGustsKmh>=40 || weather.precipitationMm>=5){
+    level='watch';
+    reasons.push('Conditions building — monitoring closely');
+  } else {
+    reasons.push('Conditions within normal range');
+  }
 
-function chooseIsland() {
-
-    const selected =
-        document.getElementById("islandSelect").value;
-
-    const data = islands[selected];
-
-    document.getElementById("islandName").innerHTML =
-        data.name;
-
-    document.getElementById("description").innerHTML =
-        data.description;
-
-    document.getElementById("climate").innerHTML =
-        data.climate;
-
-    document.getElementById("resource").innerHTML =
-        data.resource;
-
-    document.getElementById("risk").innerHTML =
-        data.risk;
-
-    document.getElementById("renewable").innerHTML =
-        data.renewable;
-
-    document.getElementById("priority").innerHTML =
-        data.priority;
-
-    document.getElementById("location").innerHTML =
-        data.location;
-
-
-    currentWeather = null;
-
-    getWeather(data);
-
-
-    document.getElementById("aiBox").innerHTML =
-
-        "🌦️ Weather is updating for <b>" +
-        data.name +
-        "</b>.<br><br>" +
-
-        "The island's primary emergency scenario is " +
-        "<b>" + data.risk + "</b>.<br><br>" +
-
-        "Click <b>🤖 Run Eco Island AI</b> to determine the first priority.";
-
-    
-    resetEmergency();
+  if(weather.pressureHpa && weather.pressureHpa<990 && level!=='emergency'){
+    level = level==='normal' ? 'watch' : level;
+    reasons.push(`Low barometric pressure (${Math.round(weather.pressureHpa)} hPa)`);
+  }
+  return { level, reasons };
 }
 
+/* ============================== SIMULATED TELEMETRY ============================== */
+// No live microgrid hooked up for this demo: battery/generation/water are
+// simulated, but driven by the real weather above (not random noise).
+function hashString(str){ let h=0; for(let i=0;i<str.length;i++){ h=(Math.imul(31,h)+str.charCodeAt(i))|0; } return h>>>0; }
+function mulberry32(seed){ let a=seed; return function(){ a|=0; a=(a+0x6d2b79f5)|0; let t=Math.imul(a^(a>>>15),1|a); t=(t+Math.imul(t^(t>>>7),61|t))^t; return ((t^(t>>>14))>>>0)/4294967296; }; }
 
-/* =========================================================
-   AI PRIORITY
-========================================================= */
+function simulateTelemetry(islandId, weather, level){
+  const tenMinuteBucket = Math.floor(Date.now()/(10*60*1000));
+  const rand = mulberry32(hashString(`${islandId}-${tenMinuteBucket}`));
+  const windKmh = weather ? weather.windSpeedKmh : 10;
+  const cloudPenalty = weather ? Math.min(weather.precipitationMm/20,1) : 0.2;
 
-function runAI() {
+  const solarKw = Math.max(15, 120*(1-cloudPenalty*0.8)) * (0.85+rand()*0.3);
+  const windGenKw = windKmh>70 ? 10 : Math.min(90, windKmh*1.1) * (0.85+rand()*0.3);
+  const generationKw = Math.round(solarKw+windGenKw);
 
-    const selected =
-        document.getElementById("islandSelect").value;
+  const baseDemandKw = 140;
+  const stressMultiplier = {normal:1,watch:1.08,warning:1.2,emergency:1.35}[level] || 1;
+  const demandKw = Math.round(baseDemandKw*stressMultiplier*(0.9+rand()*0.2));
 
-    const data = islands[selected];
+  const batteryCapacityKwh = 900;
+  const batteryDrainFactor = {normal:0,watch:0.02,warning:0.05,emergency:0.09}[level] || 0;
+  const batteryPct = Math.max(6, Math.min(98, Math.round((0.55+rand()*0.35-batteryDrainFactor)*100)));
+  const batteryKwh = Math.round((batteryPct/100)*batteryCapacityKwh);
 
-    if (!currentWeather) {
+  const waterReserveCapacityM3 = 4000;
+  const waterDrainFactor = {normal:0,watch:0.03,warning:0.08,emergency:0.15}[level] || 0;
+  const waterPct = Math.max(8, Math.min(97, Math.round((0.6+rand()*0.3-waterDrainFactor)*100)));
+  const waterReserveM3 = Math.round((waterPct/100)*waterReserveCapacityM3);
+  const waterConsumptionM3ph = Math.round((18+rand()*6)*stressMultiplier);
 
-        document.getElementById("aiBox").innerHTML =
-            "⏳ Weather data is still loading. Try again in a moment.";
-
-        return;
-    }
-
-    const w = currentWeather;
-
-    let firstPriority = "";
-
-    if (w.wind >= 35) {
-
-        firstPriority =
-            "💨 <b>Protect people from strong winds first.</b><br>" +
-            "Secure vulnerable buildings and follow any official warnings.";
-
-    }
-
-    else if (w.precipitation >= 10) {
-
-        firstPriority =
-            "🌧️ <b>Protect flood-prone areas first.</b><br>" +
-            "Heavy precipitation can increase flooding risk.";
-
-    }
-
-    else if (w.temperature_2m >= 95) {
-
-        firstPriority =
-            "💧 <b>Protect drinking water first.</b><br>" +
-            "Extreme heat can increase water demand.";
-
-    }
-
-    else {
-
-        firstPriority =
-            "📻 <b>Monitor official information first.</b><br>" +
-            "No major weather threshold is currently detected.";
-    }
-
-
-    document.getElementById("aiBox").innerHTML =
-
-        "<span class='green'>🤖 ECO ISLAND AI ANALYSIS</span>" +
-
-        "<br><br>" +
-
-        "<b>Island:</b> " +
-        data.name +
-
-        "<br>" +
-
-        "<b>Primary hazard:</b> " +
-        data.risk +
-
-        "<br>" +
-
-        "<b>Current weather:</b> " +
-        Math.round(w.temperature_2m) +
-        "°F, " +
-        Math.round(w.wind_speed_10m) +
-        " mph winds, " +
-        w.precipitation +
-        " mm precipitation." +
-
-        "<br><br>" +
-
-        "<b>🎯 What needs to happen first?</b>" +
-
-        "<br><br>" +
-
-        firstPriority +
-
-        "<br><br>" +
-
-        "🏝️ <b>Island-specific priority:</b> " +
-        data.priority;
+  return { generationKw, solarKw:Math.round(solarKw), windGenKw:Math.round(windGenKw), demandKw,
+    batteryPct, batteryKwh, batteryCapacityKwh, waterPct, waterReserveM3, waterReserveCapacityM3, waterConsumptionM3ph };
 }
 
+/* ============================== EMERGENCY ALLOCATION ENGINE ============================== */
+const POWER_SERVICES = [
+  { id:'hospital', label:'Hospital & clinic', demandKw:35, emergencyDemandKw:35 },
+  { id:'water-pumping', label:'Water pumping & treatment', demandKw:28, emergencyDemandKw:28 },
+  { id:'comms', label:'Emergency communications', demandKw:8, emergencyDemandKw:8 },
+  { id:'shelters', label:'Community shelters', demandKw:22, emergencyDemandKw:18 },
+  { id:'refrigeration', label:'Food & medical refrigeration', demandKw:18, emergencyDemandKw:14 },
+  { id:'residential', label:'Residential power', demandKw:55, emergencyDemandKw:20 },
+  { id:'street-lighting', label:'Street lighting', demandKw:10, emergencyDemandKw:4 },
+  { id:'commercial', label:'Commercial & retail', demandKw:30, emergencyDemandKw:0 },
+  { id:'public-wifi', label:'Public Wi-Fi', demandKw:4, emergencyDemandKw:0 },
+];
+const WATER_SERVICES = [
+  { id:'hospital-water', label:'Hospital & clinic', demandM3ph:3, emergencyDemandM3ph:3 },
+  { id:'drinking-water', label:'Drinking water distribution', demandM3ph:9, emergencyDemandM3ph:9 },
+  { id:'shelters-water', label:'Community shelters', demandM3ph:4, emergencyDemandM3ph:4 },
+  { id:'sanitation', label:'Sanitation systems', demandM3ph:5, emergencyDemandM3ph:4 },
+  { id:'residential-water', label:'Residential supply', demandM3ph:12, emergencyDemandM3ph:5 },
+  { id:'irrigation', label:'Agricultural irrigation', demandM3ph:8, emergencyDemandM3ph:0 },
+  { id:'commercial-water', label:'Commercial use', demandM3ph:6, emergencyDemandM3ph:0 },
+];
 
-/* =========================================================
-   START EMERGENCY
-========================================================= */
+function allocate(services, supply, level, normalKey, emergencyKey){
+  const inEmergency = level==='warning' || level==='emergency';
+  let remaining = supply;
+  return services.map(service=>{
+    const wanted = inEmergency ? service[emergencyKey] : service[normalKey];
+    const given = Math.max(0, Math.min(wanted, remaining));
+    remaining -= given;
+    let status = 'full';
+    if(wanted===0) status='paused';
+    else if(given<=0) status='off';
+    else if(given<wanted) status='reduced';
+    return { ...service, wanted, given, status };
+  });
+}
+const allocatePower = (kw, level) => allocate(POWER_SERVICES, kw, level, 'demandKw', 'emergencyDemandKw');
+const allocateWater = (m3, level) => allocate(WATER_SERVICES, m3, level, 'demandM3ph', 'emergencyDemandM3ph');
 
-function startEmergency() {
+function buildEventLog({ level, reasons, telemetry, powerAllocation, waterAllocation }){
+  const log = [];
+  const time = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+  if(level==='normal'){
+    log.push({ time, text:'Conditions normal. Resources distributed on standard schedule.' });
+    return log;
+  }
+  reasons.forEach(r=>log.push({ time, text:r }));
 
-    const selected =
-        document.getElementById("islandSelect").value;
+  if(telemetry.windGenKw<40 && telemetry.generationKw<telemetry.demandKw){
+    log.push({ time, text:`Generation (${telemetry.generationKw} kW) is short of demand (${telemetry.demandKw} kW) — drawing down battery reserve.` });
+  }
+  const shedPower = powerAllocation.filter(s=>s.status==='off'||s.status==='paused');
+  if(shedPower.length) log.push({ time, text:`Non-essential loads shed to protect critical services: ${shedPower.map(s=>s.label.toLowerCase()).join(', ')}.` });
+  const reducedPower = powerAllocation.filter(s=>s.status==='reduced');
+  if(reducedPower.length) log.push({ time, text:`Power reduced (not cut) to: ${reducedPower.map(s=>s.label.toLowerCase()).join(', ')}.` });
+  const shedWater = waterAllocation.filter(s=>s.status==='off'||s.status==='paused');
+  if(shedWater.length) log.push({ time, text:`Water rerouted away from lower-priority use (${shedWater.map(s=>s.label.toLowerCase()).join(', ')}) to protect drinking water and the hospital supply.` });
+  if(level==='emergency'){
+    log.push({ time, text:'Cross-system check: hospital and water pumping confirmed on guaranteed power. Battery reserve prioritized for critical services if generation keeps falling.' });
+  }
+  return log;
+}
 
-    const data = islands[selected];
+/* ============================== RENDERING ============================== */
+const MODE_COPY = { normal:'Normal', watch:'Watch', warning:'Warning', emergency:'Emergency mode', unknown:'Connecting' };
+const LEVEL_COLOR = { normal:'var(--teal-400)', watch:'var(--amber-300)', warning:'var(--amber-400)', emergency:'var(--coral-500)', unknown:'var(--fog-300)' };
+const STATUS_LABEL = { full:'Full power', reduced:'Reduced', off:'Shed', paused:'Paused' };
 
-    const emergency =
-        emergencies[data.hazard];
+const DEFAULT_ISLAND_ID = ISLAND_GROUPS[0].islands[0].id;
+const WEATHER_POLL_MS = 5*60*1000;
+const TICK_MS = 30*1000;
 
+const state = { islandId: DEFAULT_ISLAND_ID, weather: null, loading: true, error: null, lastUpdated: null };
 
-    document.getElementById("emergencySection").style.display =
-        "block";
+function el(tag, attrs={}, children=[]){
+  const node = document.createElement(tag);
+  for(const [k,v] of Object.entries(attrs)){
+    if(k==='class') node.className = v;
+    else if(k==='html') node.innerHTML = v;
+    else if(k.startsWith('on') && typeof v==='function') node.addEventListener(k.slice(2), v);
+    else node.setAttribute(k, v);
+  }
+  (Array.isArray(children)?children:[children]).forEach(c=>{
+    if(c==null) return;
+    node.appendChild(typeof c==='string' ? document.createTextNode(c) : c);
+  });
+  return node;
+}
 
+function allocationRow(service, unit){
+  const pct = service.wanted>0 ? Math.round((service.given/service.wanted)*100) : 0;
+  return el('div', { class:`allocation-row allocation-row--${service.status}` }, [
+    el('div', { class:'allocation-row__top' }, [
+      el('span', { class:'allocation-row__label' }, service.label),
+      el('span', { class:'allocation-row__status' }, STATUS_LABEL[service.status]),
+    ]),
+    el('div', { class:'allocation-row__track' }, [
+      el('div', { class:'allocation-row__fill', style:`width:${pct}%` }),
+    ]),
+    el('div', { class:'allocation-row__figures' }, `${service.given} / ${service.wanted} ${unit}`),
+  ]);
+}
 
-    document.getElementById("emergencyTitle").innerHTML =
-        emergency.title;
+function renderStatusRing(level, score){
+  const color = LEVEL_COLOR[level] || LEVEL_COLOR.unknown;
+  const radius = 64, circumference = 2*Math.PI*radius, offset = circumference - (score/100)*circumference;
+  const wrap = el('div', { class:'status-ring' });
+  wrap.innerHTML = `
+    <svg viewBox="0 0 160 160" class="status-ring__svg" role="img" aria-label="Island resilience score ${score} percent, ${MODE_COPY[level]||'unknown'}">
+      <circle cx="80" cy="80" r="${radius}" class="status-ring__track" />
+      <circle cx="80" cy="80" r="${radius}" style="stroke:${color};stroke-dasharray:${circumference};stroke-dashoffset:${offset}" class="status-ring__value" />
+    </svg>
+    <div class="status-ring__center">
+      <span class="status-ring__score">${score}</span>
+      <span class="status-ring__unit">resilience</span>
+    </div>
+    <div class="status-ring__badge" style="color:${color};border-color:${color}">${MODE_COPY[level]||'Connecting…'}</div>
+  `;
+  return wrap;
+}
 
+function render(){
+  const island = findIsland(state.islandId);
+  const { level, reasons } = classifyConditions(state.weather);
+  const telemetry = simulateTelemetry(state.islandId, state.weather, level);
+  const powerAllocation = allocatePower(telemetry.generationKw + Math.round(telemetry.batteryKwh*0.2), level);
+  const waterAllocation = allocateWater(Math.round(telemetry.waterReserveM3/24), level);
+  const eventLog = buildEventLog({ level, reasons, telemetry, powerAllocation, waterAllocation });
+  const generationRatio = Math.min(1, telemetry.generationKw/telemetry.demandKw);
+  const resilienceScore = Math.round(telemetry.batteryPct*0.4 + telemetry.waterPct*0.35 + generationRatio*100*0.25);
 
-    document.getElementById("emergencyDescription").innerHTML =
-        emergency.description;
+  const root = document.getElementById('root');
+  root.innerHTML = '';
 
+  const app = el('div', { class:`app app--${level}` });
 
-    let weatherText = "Live weather unavailable.";
-
-    if (currentWeather) {
-
-        weatherText =
-            Math.round(currentWeather.temperature_2m) +
-            "°F | " +
-            Math.round(currentWeather.wind_speed_10m) +
-            " mph wind | " +
-            currentWeather.precipitation +
-            " mm precipitation";
-
-    }
-
-
-    document.getElementById("emergencyWeather").innerHTML =
-        weatherText;
-
-
-    /* CREATE PRECAUTIONS */
-
-    const container =
-        document.getElementById("precautions");
-
-    container.innerHTML = "";
-
-
-    emergency.precautions.forEach(function(item, index) {
-
-        const div =
-            document.createElement("div");
-
-        div.className = "precaution";
-
-        div.innerHTML =
-
-            "<div class='precautionTitle'>" +
-
-            (index + 1) +
-            ". " +
-            item[0] +
-
-            "</div>" +
-
-            "<div class='why'>" +
-
-            "💡 Why it matters: " +
-
-            item[1] +
-
-            "</div>";
-
-
-        container.appendChild(div);
-
+  // Header
+  const select = el('select', { class:'island-selector__select', 'aria-label':'Select island or island group' });
+  ISLAND_GROUPS.forEach(group=>{
+    const optgroup = el('optgroup', { label: group.region });
+    group.islands.forEach(i=>{
+      const opt = el('option', { value:i.id }, i.name);
+      if(i.id===state.islandId) opt.setAttribute('selected','selected');
+      optgroup.appendChild(opt);
     });
+    select.appendChild(optgroup);
+  });
+  select.addEventListener('change', (e)=>{ state.islandId = e.target.value; loadWeather(); });
 
+  const header = el('header', { class:'app-header' }, [
+    el('div', { class:'app-header__brand' }, [
+      el('span', { class:'app-header__mark', 'aria-hidden':'true', html:`<svg viewBox="0 0 40 40" width="28" height="28"><path d="M20 3 C11 10 6 18 6 25 a14 14 0 0 0 28 0 C34 18 29 10 20 3 Z" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M13 24 c3 3 5 -3 8 0 s5 -3 8 0" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>` }),
+      el('div', {}, [
+        el('p', { class:'app-header__title' }, 'Eco Island'),
+        el('p', { class:'app-header__tagline' }, 'Smart-island monitoring & emergency resource management'),
+      ]),
+    ]),
+    el('div', { class:'app-header__controls' }, [
+      el('label', { class:'island-selector' }, [ el('span', { class:'island-selector__label' }, 'Monitoring'), select ]),
+      el('div', { class:`mode-badge mode-badge--${level}` }, [ el('span', { class:'mode-badge__dot' }), MODE_COPY[level]||'Connecting' ]),
+    ]),
+    state.lastUpdated ? el('p', { class:'app-header__updated' }, `Updated ${state.lastUpdated}`) : null,
+  ]);
+  app.appendChild(header);
 
-    /* FIRST PRIORITY */
+  if(level==='emergency'){
+    app.appendChild(el('div', { class:'emergency-banner', role:'alert' }, `Emergency mode active for ${island.name} — essential services are being prioritized automatically.`));
+  }
 
-    document.getElementById("firstPriority").innerHTML =
+  // Left column: status ring + weather
+  const statusPanel = el('section', { class:'panel status-panel', 'aria-label':'Overall resilience' }, [
+    renderStatusRing(level, resilienceScore),
+    el('p', { class:'status-panel__note' }, {
+      normal: 'All systems operating on standard schedules. No automated interventions active.',
+      watch: 'Conditions are building. Eco Island is monitoring closely and pre-staging reserves.',
+      warning: 'Non-essential loads are being reduced to protect critical services and preserve reserves.',
+      emergency: 'Emergency mode: essential services guaranteed, remaining resources distributed by priority.',
+      unknown: 'Connecting to live conditions…',
+    }[level]),
+  ]);
 
-        "<span class='red'>" +
+  const weatherPanel = el('section', { class:'panel weather-panel', 'aria-label':'Live weather conditions' }, [
+    el('header', { class:'panel__header' }, [ el('h2', {}, 'Live conditions'), el('span', { class:'panel__subtitle' }, island.name) ]),
+  ]);
+  if(state.loading) weatherPanel.appendChild(el('p', { class:'panel__status' }, 'Fetching current weather…'));
+  if(state.error && !state.loading) weatherPanel.appendChild(el('p', { class:'panel__status panel__status--error' }, `Couldn't reach the weather service (${state.error}). Retrying shortly.`));
+  if(state.weather && !state.loading){
+    const w = state.weather;
+    weatherPanel.appendChild(el('div', { class:'weather-panel__headline' }, [
+      el('span', { class:'weather-panel__temp' }, `${Math.round(w.temperatureC)}°C`),
+      el('span', { class:'weather-panel__condition' }, w.conditionText),
+    ]));
+    const grid = el('dl', { class:'weather-panel__grid' });
+    [['Wind', `${Math.round(w.windSpeedKmh)} km/h`], ['Gusts', `${Math.round(w.windGustsKmh)} km/h`],
+     ['Precipitation', `${w.precipitationMm} mm`], ['Humidity', `${w.humidity}%`],
+     ['Pressure', `${Math.round(w.pressureHpa)} hPa`],
+     ['Observed', new Date(w.observedAt).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})]]
+      .forEach(([k,v])=> grid.appendChild(el('div', {}, [ el('dt', {}, k), el('dd', {}, v) ])));
+    weatherPanel.appendChild(grid);
+    weatherPanel.appendChild(el('p', { class:'panel__footnote' }, 'Source: Open-Meteo, live forecast API.'));
+  }
 
-        "🚨 FIRST PRIORITY: PROTECT PEOPLE" +
+  // Right column: energy, water, event log
+  const totalWanted = powerAllocation.reduce((s,a)=>s+a.wanted,0);
+  const totalGiven = powerAllocation.reduce((s,a)=>s+a.given,0);
+  const shortfall = totalWanted - totalGiven;
 
-        "</span>" +
+  const energyCard = el('section', { class:'panel resource-card', 'aria-label':'Energy status' }, [
+    el('header', { class:'panel__header' }, [ el('h2', {}, 'Energy'), el('span', { class:'panel__subtitle' }, `${telemetry.generationKw} kW generated now`) ]),
+    el('div', { class:'resource-card__stats' }, [
+      el('div', {}, [ el('span', { class:'resource-card__stat-value' }, `${telemetry.solarKw} kW`), el('span', { class:'resource-card__stat-label' }, 'Solar') ]),
+      el('div', {}, [ el('span', { class:'resource-card__stat-value' }, `${telemetry.windGenKw} kW`), el('span', { class:'resource-card__stat-label' }, 'Wind') ]),
+      el('div', {}, [ el('span', { class:'resource-card__stat-value' }, `${telemetry.batteryPct}%`), el('span', { class:'resource-card__stat-label' }, `Battery (${telemetry.batteryKwh} kWh)`) ]),
+    ]),
+    shortfall>0 ? el('p', { class:'panel__status panel__status--warning' }, `Demand exceeds generation by ${shortfall} kW — covering the gap from battery reserve and reprioritizing.`) : null,
+    el('div', { class:'allocation-list' }, powerAllocation.map(s=>allocationRow(s,'kW'))),
+  ]);
 
-        "<br><br>" +
+  const waterCard = el('section', { class:'panel resource-card', 'aria-label':'Water status' }, [
+    el('header', { class:'panel__header' }, [ el('h2', {}, 'Water'), el('span', { class:'panel__subtitle' }, `${telemetry.waterPct}% reserve · ${telemetry.waterReserveM3} m³`) ]),
+    el('div', { class:'resource-card__stats' }, [
+      el('div', {}, [ el('span', { class:'resource-card__stat-value' }, `${telemetry.waterReserveM3} m³`), el('span', { class:'resource-card__stat-label' }, 'In reserve') ]),
+      el('div', {}, [ el('span', { class:'resource-card__stat-value' }, `${telemetry.waterConsumptionM3ph} m³/h`), el('span', { class:'resource-card__stat-label' }, 'Current draw') ]),
+      el('div', {}, [ el('span', { class:'resource-card__stat-value' }, `${Math.max(1, Math.round(telemetry.waterReserveM3/telemetry.waterConsumptionM3ph))} h`), el('span', { class:'resource-card__stat-label' }, 'Reserve at this rate') ]),
+    ]),
+    el('div', { class:'allocation-list' }, waterAllocation.map(s=>allocationRow(s,'m³/h'))),
+  ]);
 
-        "The community should immediately follow " +
+  const logPanel = el('section', { class:'panel event-log', 'aria-label':'Decision log' }, [
+    el('header', { class:'panel__header' }, [ el('h2', {}, 'Decision log'), el('span', { class:'panel__subtitle' }, level==='normal' ? 'Standard schedule' : 'Automated response reasoning') ]),
+    el('ol', { class:'event-log__list' }, eventLog.map(entry=> el('li', { class:'event-log__item' }, [ el('span', { class:'event-log__time' }, entry.time), el('span', { class:'event-log__text' }, entry.text) ]))),
+  ]);
 
-        "official emergency instructions and move away " +
+  app.appendChild(el('main', { class:'app__grid' }, [
+    el('div', { class:'app__column app__column--left' }, [ statusPanel, weatherPanel ]),
+    el('div', { class:'app__column app__column--right' }, [ energyCard, waterCard, logPanel ]),
+  ]));
 
-        "from the specific hazard zone if authorities " +
+  app.appendChild(el('footer', { class:'app__footer' }, [
+    el('p', {}, 'Weather from Open-Meteo, refreshed automatically. Energy, water, and battery figures are simulated telemetry driven by live conditions, standing in for on-island IoT sensors and the microgrid controller.'),
+  ]));
 
-        "order an evacuation.";
-
-    
-    /* STATUS */
-
-    document.getElementById("status").innerHTML =
-        "🚨 SIMULATION MODE";
-
-    document.getElementById("status").style.background =
-        "#542d2b";
-
-    
-    /* SCROLL */
-
-    document.getElementById("emergencySection")
-        .scrollIntoView({
-            behavior: "smooth"
-        });
+  root.appendChild(app);
 }
 
-
-/* =========================================================
-   RESET EMERGENCY
-========================================================= */
-
-function resetEmergency() {
-
-    document.getElementById("emergencySection").style.display =
-        "none";
-
-    document.getElementById("status").innerHTML =
-        "🟢 NORMAL MODE";
-
-    document.getElementById("status").style.background =
-        "#18553e";
+async function loadWeather(){
+  state.loading = true; state.error = null;
+  render();
+  const island = findIsland(state.islandId);
+  try{
+    state.weather = await fetchIslandWeather(island.lat, island.lon);
+    state.lastUpdated = new Date().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+  }catch(err){
+    state.error = err.message;
+  }finally{
+    state.loading = false;
+    render();
+  }
 }
 
-
-/* =========================================================
-   START APP
-========================================================= */
-
-chooseIsland();
-
+loadWeather();
+setInterval(loadWeather, WEATHER_POLL_MS);
+setInterval(render, TICK_MS);
 </script>
-
 </body>
 </html>
